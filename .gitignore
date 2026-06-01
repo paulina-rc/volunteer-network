@@ -1,0 +1,7 @@
+.tmp.driveupload/
+.tmp.drivedownload/
+
+__pycache__/
+*.pyc
+
+.vscode/
