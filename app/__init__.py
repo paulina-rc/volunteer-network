@@ -13,4 +13,13 @@ def create_app():
 
     db.init_app(app)
 
+    with app.app_context():
+
+        from app.models.user import Usuario
+        from app.models.voluntariado import Voluntariado
+        from app.models.postulacion import Postulacion
+        from app.models.certificacion import Certificacion
+
+        db.create_all()
+
     return app
