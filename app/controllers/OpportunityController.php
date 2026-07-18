@@ -12,17 +12,19 @@ class OpportunityController
 
     public function search(): void
     {
-        renderPending('Buscar oportunidades', 'Se implementa en el Paso 5 del plan de desarrollo (RF06).');
+        $categories = (new CategoryModel())->getAll();
+        require __DIR__ . '/../views/opportunity_list.php';
     }
 
     public function view(): void
     {
-        renderPending('Detalle de oportunidad', 'Se implementa en los Pasos 4-5 del plan de desarrollo.');
+        require __DIR__ . '/../views/opportunity_detail.php';
     }
 
     public function publish(): void
     {
-        renderPending('Publicar oportunidad', 'Se implementa en el Paso 4 del plan de desarrollo (RF05, RN02, RN03).');
+        $categories = (new CategoryModel())->getAll();
+        require __DIR__ . '/../views/opportunity_publish.php';
     }
 
     public function edit(): void

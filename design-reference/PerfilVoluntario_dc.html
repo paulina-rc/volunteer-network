@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Comfortaa:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></link>
+  <style>
+    body{ margin:0; font-family:'Poppins',sans-serif; color:#343434; background:#F8F7F4; line-height:1.6; }
+    a{ text-decoration:none; color:#0F4C5C; }
+    a:hover{ color:#F26B4A; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="1,1" style="position:fixed;top:-999px;left:-999px;width:1px;height:1px;overflow:hidden"></x-import>
+
+<header style="background:rgba(248,247,244,0.97);backdrop-filter:blur(6px);position:sticky;top:0;z-index:998;border-bottom:1px solid rgba(15,76,92,0.08)">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;gap:24px">
+    <a href="Home.dc.html" style="font-family:'Comfortaa',sans-serif;font-weight:700;font-size:22px;color:#0F4C5C">Enlaza</a>
+    <nav style="display:flex;gap:30px">
+      <a href="Home.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C">Inicio</a>
+      <a href="Busqueda.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C">Oportunidades</a>
+      <a href="PerfilOrganizacion.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C">Organizaciones</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:#A8C9A1">
+      <div style="width:32px;height:32px;border-radius:50%;background:#0F4C5C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600">AR</div>
+      <span style="font-size:14px;font-weight:600;color:#0B3945">Ana R.</span>
+    </div>
+  </div>
+</header>
+
+<section style="background:#0F4C5C;padding:40px 0 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap">
+    <div style="width:110px;height:110px;border-radius:50%;background:#A8C9A1;border:4px solid #fff;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-size:36px;font-weight:700;color:#0B3945;flex-shrink:0">AR</div>
+    <div style="flex:1;min-width:240px;padding-bottom:20px">
+      <h1 style="font-family:'Archivo',sans-serif;font-size:26px;font-weight:700;color:#fff;margin:0 0 6px">Ana Rodríguez</h1>
+      <div style="font-size:13.5px;color:#dfe8e6;display:flex;gap:16px;flex-wrap:wrap">
+        <span><i class="fa-solid fa-location-dot"></i> Ciudad Quesada, San Carlos</span>
+        <span><i class="fa-regular fa-calendar"></i> Voluntaria desde marzo 2025</span>
+      </div>
+    </div>
+    <div style="padding-bottom:20px">
+      <button style="padding:11px 22px;border-radius:999px;border:1.5px solid #fff;color:#fff;background:transparent;font-weight:600;font-size:14px;cursor:pointer">Editar perfil</button>
+    </div>
+  </div>
+  <div style="max-width:1180px;margin:0 auto;padding:28px 24px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div style="background:#0B3945;border-radius:14px;padding:20px;text-align:center">
+      <div style="font-family:'Archivo',sans-serif;font-size:26px;font-weight:800;color:#E9A227">36</div>
+      <div style="font-size:12.5px;color:#dfe8e6;margin-top:4px">Horas acumuladas</div>
+    </div>
+    <div style="background:#0B3945;border-radius:14px;padding:20px;text-align:center">
+      <div style="font-family:'Archivo',sans-serif;font-size:26px;font-weight:800;color:#E9A227">7</div>
+      <div style="font-size:12.5px;color:#dfe8e6;margin-top:4px">Actividades completadas</div>
+    </div>
+    <div style="background:#0B3945;border-radius:14px;padding:20px;text-align:center">
+      <div style="font-family:'Archivo',sans-serif;font-size:26px;font-weight:800;color:#E9A227">4</div>
+      <div style="font-size:12.5px;color:#dfe8e6;margin-top:4px">Organizaciones apoyadas</div>
+    </div>
+  </div>
+  <div style="height:40px"></div>
+</section>
+
+<section style="padding:36px 0 76px">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <div style="display:flex;gap:10px;margin-bottom:32px">
+      <button onClick="{{ elegirInscripciones }}" style="padding:10px 22px;border-radius:999px;border:1.5px solid #0F4C5C;font-weight:600;font-size:14px;cursor:pointer;background:{{ fondoTabInscripciones }};color:{{ textoTabInscripciones }}">Mis inscripciones</button>
+      <button onClick="{{ elegirPerfil }}" style="padding:10px 22px;border-radius:999px;border:1.5px solid #0F4C5C;font-weight:600;font-size:14px;cursor:pointer;background:{{ fondoTabPerfil }};color:{{ textoTabPerfil }}">Habilidades e intereses</button>
+    </div>
+
+    <sc-if value="{{ mostrarInscripciones }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <sc-for list="{{ inscripciones }}" as="ins" hint-placeholder-count="4">
+          <div style="background:#fff;border-radius:14px;border:1px solid #EFECE3;padding:18px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+            <div style="width:64px;height:64px;border-radius:12px;flex-shrink:0"><image-slot id="{{ ins.imgId }}" shape="rounded" radius="12" placeholder="{{ ins.fotoDesc }}" style="width:64px;height:64px"></image-slot></div>
+            <div style="flex:1;min-width:200px">
+              <div style="font-size:11px;font-weight:600;color:#F26B4A;text-transform:uppercase;letter-spacing:.05em">{{ ins.tag }}</div>
+              <h3 style="font-size:15.5px;font-weight:600;margin:4px 0 4px;color:#343434">{{ ins.titulo }}</h3>
+              <div style="font-size:12.5px;color:#8a8a85">{{ ins.org }} · {{ ins.fecha }}</div>
+            </div>
+            <div style="padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;background:{{ ins.estadoFondo }};color:{{ ins.estadoTexto }}">{{ ins.estado }}</div>
+            <a href="DetalleOportunidad.dc.html" style="font-size:13px;font-weight:600;color:#0F4C5C">Ver detalle</a>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ mostrarPerfil }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:16px;border:1px solid #EFECE3;padding:28px;max-width:640px">
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px">
+          <label style="font-size:12px;font-weight:600;color:#0F4C5C;text-transform:uppercase;letter-spacing:.04em">Sobre mí</label>
+          <textarea rows="3" style="border:1.5px solid #E7E4DC;border-radius:10px;padding:12px 14px;font-family:'Poppins',sans-serif;font-size:14px;color:#343434;resize:vertical">Estudiante de bachillerato en el Colegio Agropecuario de San Carlos, me interesa el trabajo ambiental y comunitario.</textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px">
+          <label style="font-size:12px;font-weight:600;color:#0F4C5C;text-transform:uppercase;letter-spacing:.04em">Categorías de interés</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ categoriasInteres }}" as="cat" hint-placeholder-count="5">
+              <span style="padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;background:{{ cat.fondo }};color:{{ cat.texto }};border:1.5px solid #0F4C5C">{{ cat.nombre }}</span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:24px">
+          <label style="font-size:12px;font-weight:600;color:#0F4C5C;text-transform:uppercase;letter-spacing:.04em">Disponibilidad</label>
+          <select style="border:1.5px solid #E7E4DC;border-radius:10px;padding:12px 14px;font-family:'Poppins',sans-serif;font-size:14px;color:#343434">
+            <option>Fines de semana</option>
+            <option>Entre semana por la tarde</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+        <button style="padding:12px 26px;border-radius:999px;background:#F26B4A;color:#fff;font-weight:600;font-size:14px;border:none;cursor:pointer">Guardar cambios</button>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'inscripciones' };
+
+  renderVals() {
+    const mostrarInscripciones = this.state.tab === 'inscripciones';
+    const inscripciones = [
+      { tag: 'Ambiental', titulo: 'Jornada de reforestación río San Carlos', org: 'Fundación Verde Norte', fecha: '24 ago 2026', estado: 'Aceptada', estadoFondo: '#A8C9A1', estadoTexto: '#0B3945', imgId: 'perfil-insc-1', fotoDesc: 'reforestación' },
+      { tag: 'Cultural', titulo: 'Rescate de tradiciones orales boyeras', org: 'Casa de la Cultura Zarcero', fecha: '11 oct 2026', estado: 'Pendiente', estadoFondo: '#E9A227', estadoTexto: '#4a3106', imgId: 'perfil-insc-2', fotoDesc: 'tradiciones boyeras' },
+      { tag: 'Salud', titulo: 'Feria de salud comunitaria', org: 'Cruz Roja — sede local', fecha: '14 sept 2026', estado: 'Completada', estadoFondo: '#0F4C5C', estadoTexto: '#fff', imgId: 'perfil-insc-3', fotoDesc: 'feria de salud' },
+      { tag: 'Educativo', titulo: 'Tutorías de matemáticas para primaria', org: 'Asociación Aprender Juntos', fecha: '2 sept 2026', estado: 'Rechazada', estadoFondo: '#F1EEE6', estadoTexto: '#8a8a85', imgId: 'perfil-insc-4', fotoDesc: 'tutorías' },
+    ];
+    const categoriasInteres = [
+      { nombre: 'Ambiental', fondo: '#0F4C5C', texto: '#fff' },
+      { nombre: 'Educativo', fondo: '#0F4C5C', texto: '#fff' },
+      { nombre: 'Comunitario', fondo: '#fff', texto: '#0F4C5C' },
+      { nombre: 'Salud', fondo: '#fff', texto: '#0F4C5C' },
+      { nombre: 'Cultural', fondo: '#fff', texto: '#0F4C5C' },
+    ];
+    return {
+      mostrarInscripciones,
+      mostrarPerfil: !mostrarInscripciones,
+      fondoTabInscripciones: mostrarInscripciones ? '#0F4C5C' : 'transparent',
+      textoTabInscripciones: mostrarInscripciones ? '#fff' : '#0F4C5C',
+      fondoTabPerfil: !mostrarInscripciones ? '#0F4C5C' : 'transparent',
+      textoTabPerfil: !mostrarInscripciones ? '#fff' : '#0F4C5C',
+      elegirInscripciones: () => this.setState({ tab: 'inscripciones' }),
+      elegirPerfil: () => this.setState({ tab: 'perfil' }),
+      inscripciones, categoriasInteres,
+    };
+  }
+}
+</script>
+</body>
+</html>

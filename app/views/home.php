@@ -1,46 +1,262 @@
+<?php
+$activeNav = 'home';
+$showSearchIcon = true;
+
+$heroSlides = [
+    [
+        'icon' => 'fa-heart',
+        'eyebrow' => 'Conecta. Participa. Transforma.',
+        'title' => 'Encontrá la oportunidad de voluntariado que va con vos',
+        'text' => 'Enlaza conecta a personas con ganas de ayudar y organizaciones sin fines de lucro que necesitan apoyo. La tecnología al servicio de la comunidad.',
+        'cta1' => 'Quiero ser voluntario',
+        'cta1Href' => BASE_URL . '?action=register&tab=register',
+        'cta2' => 'Soy una organización',
+        'cta2Href' => BASE_URL . '?action=register&tab=register',
+        'gradient' => 'linear-gradient(120deg, #0F4C5C 0%, #146579 55%, #A8C9A1 130%)',
+        'tint' => 'rgba(15,76,92,0.35)',
+        'photoAlt' => 'foto: jornada de reforestación comunitaria a orillas del río San Carlos, luz de mañana',
+    ],
+    [
+        'icon' => 'fa-users',
+        'eyebrow' => '+45 organizaciones aliadas',
+        'title' => 'Organizaciones que ya están generando cambios reales',
+        'text' => 'Publicá tus oportunidades, gestioná inscripciones y encontrá voluntarios afines a tu causa en un solo lugar.',
+        'cta1' => 'Publicar oportunidad',
+        'cta1Href' => BASE_URL . '?action=publish_opportunity',
+        'cta2' => 'Ver organizaciones',
+        'cta2Href' => BASE_URL . '?action=view_organization_profile',
+        'gradient' => 'linear-gradient(120deg, #F26B4A 0%, #c9502f 60%, #E9A227 140%)',
+        'tint' => 'rgba(11,57,69,0.3)',
+        'photoAlt' => 'foto: voluntaria dando tutoría a un niño en un aula rural, luz natural de ventana',
+    ],
+    [
+        'icon' => 'fa-seedling',
+        'eyebrow' => 'Impacto ambiental, social y educativo',
+        'title' => 'Cada hora de voluntariado transforma una comunidad',
+        'text' => 'Explorá oportunidades por categoría, ubicación y disponibilidad, y sumate a una causa que te importe.',
+        'cta1' => 'Explorar oportunidades',
+        'cta1Href' => BASE_URL . '?action=search_opportunities',
+        'cta2' => null,
+        'cta2Href' => null,
+        'gradient' => 'linear-gradient(120deg, #E9A227 0%, #c78415 55%, #0F4C5C 140%)',
+        'tint' => 'rgba(15,76,92,0.3)',
+        'photoAlt' => 'foto: brigada de salud comunitaria atendiendo a vecinos en una feria rural',
+    ],
+];
+
+// TODO (Paso 4/5 del plan de desarrollo): reemplazar por oportunidades reales
+// desde OpportunityModel (más recientes / destacadas) en vez de este arreglo de ejemplo.
+$featuredOpportunities = [
+    ['tag' => 'Ambiental', 'title' => 'Jornada de reforestación río San Carlos', 'org' => 'Fundación Verde Norte', 'date' => '24 ago 2026', 'location' => 'San Carlos', 'slots' => '8', 'photoAlt' => 'foto: voluntarios sembrando árboles junto al río, botas y guantes de trabajo'],
+    ['tag' => 'Educativo', 'title' => 'Tutorías de matemáticas para primaria', 'org' => 'Asociación Aprender Juntos', 'date' => '2 sept 2026', 'location' => 'Ciudad Quesada', 'slots' => '3', 'photoAlt' => 'foto: tutora y estudiante revisando un cuaderno de matemáticas en un aula'],
+    ['tag' => 'Salud', 'title' => 'Feria de salud comunitaria', 'org' => 'Cruz Roja — sede local', 'date' => '14 sept 2026', 'location' => 'Florencia', 'slots' => '12', 'photoAlt' => 'foto: fila de vecinos siendo atendidos en carpa de feria de salud'],
+];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Enlaza — Base del proyecto</title>
+    <title>Enlaza — Conecta. Participa. Transforma.</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/general-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <div style="max-width:900px;margin:0 auto;padding:40px 24px 80px;text-align:center">
-        <div class="logo-enlaza" style="font-size:30px;margin-bottom:6px">Enlaza</div>
-        <p style="color:#8a8a85;font-size:13px;margin-bottom:32px">La tecnología al servicio de la comunidad</p>
+<?php require __DIR__ . '/partials/header.php'; ?>
 
-        <div class="status-banner">
-            <i class="fa-solid fa-circle-check"></i>
-            Conexión a la base de datos exitosa — <?= count($categories) ?> categorías cargadas desde MySQL
+<section class="hero">
+    <?php foreach ($heroSlides as $index => $slide): ?>
+        <div class="hero__slide<?= $index === 0 ? ' hero__slide--active' : '' ?>" style="background:<?= $slide['gradient'] ?>" data-slide="<?= $index ?>">
+            <div class="hero__slide-photo">
+                <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="<?= htmlspecialchars($slide['photoAlt']) ?>">
+            </div>
+            <div class="hero__tint" style="background:<?= $slide['tint'] ?>"></div>
+            <div class="hero__gradient"></div>
+            <div class="hero__content">
+                <div class="hero__eyebrow"><i class="fa-solid <?= htmlspecialchars($slide['icon']) ?>"></i> <?= htmlspecialchars($slide['eyebrow']) ?></div>
+                <h1 class="hero__title"><?= htmlspecialchars($slide['title']) ?></h1>
+                <p class="hero__text"><?= htmlspecialchars($slide['text']) ?></p>
+                <div class="hero__actions">
+                    <a href="<?= htmlspecialchars($slide['cta1Href']) ?>" class="btn btn--primary"><?= htmlspecialchars($slide['cta1']) ?> <i class="fa-solid fa-arrow-right"></i></a>
+                    <?php if ($slide['cta2'] !== null): ?>
+                        <a href="<?= htmlspecialchars($slide['cta2Href']) ?>" class="btn hero__cta--light"><?= htmlspecialchars($slide['cta2']) ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
+    <?php endforeach; ?>
 
-        <h1 style="color:var(--color-primary);font-size:22px;margin-bottom:6px">Base del proyecto lista</h1>
-        <p style="color:#5c5c58;font-size:14.5px;max-width:560px;margin:0 auto 36px">
-            Esta pantalla confirma que el router, la conexión PDO, el esquema de base de datos
-            y el primer modelo (<code>CategoryModel</code>) funcionan de punta a punta.
-            Las pantallas del prototipo (Home, Búsqueda, Perfiles, etc.) se implementan
-            en los siguientes pasos del plan de desarrollo.
-        </p>
+    <button type="button" class="hero__nav-btn hero__nav-btn--prev" data-hero-prev aria-label="Diapositiva anterior"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" class="hero__nav-btn hero__nav-btn--next" data-hero-next aria-label="Diapositiva siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="hero__dots">
+        <?php foreach ($heroSlides as $index => $slide): ?>
+            <button type="button" class="hero__dot<?= $index === 0 ? ' hero__dot--active' : '' ?>" data-hero-dot="<?= $index ?>" aria-label="Ir a la diapositiva <?= $index + 1 ?>"></button>
+        <?php endforeach; ?>
+    </div>
+</section>
 
-        <div class="categories-grid">
+<div class="search-card">
+    <div class="search-card__field">
+        <label class="search-card__label" for="home-search-query">¿Qué buscás?</label>
+        <div class="search-card__input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="home-search-query" placeholder="Ej. reforestación, tutorías, feria de salud...">
+        </div>
+    </div>
+    <div class="search-card__field">
+        <label class="search-card__label" for="home-search-category">Categoría</label>
+        <div class="search-card__input-wrap">
+            <i class="fa-solid fa-layer-group"></i>
+            <select id="home-search-category">
+                <option>Todas las categorías</option>
+                <?php foreach ($categories as $category): ?>
+                    <option><?= htmlspecialchars($category['name']) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="search-card__field">
+        <label class="search-card__label" for="home-search-location">Ubicación</label>
+        <div class="search-card__input-wrap">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" id="home-search-location" placeholder="San Carlos, Alajuela...">
+        </div>
+    </div>
+    <a href="<?= BASE_URL ?>?action=search_opportunities" class="btn btn--primary search-card__submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</a>
+</div>
+
+<section class="stats-banner">
+    <div class="container stats-banner__grid">
+        <div><div class="stats-banner__number">120+</div><div class="stats-banner__label">Oportunidades activas</div></div>
+        <div><div class="stats-banner__number">45+</div><div class="stats-banner__label">Organizaciones aliadas</div></div>
+        <div><div class="stats-banner__number">800+</div><div class="stats-banner__label">Voluntarios conectados</div></div>
+        <div><div class="stats-banner__number">12</div><div class="stats-banner__label">Comunidades impactadas</div></div>
+    </div>
+    <p class="stats-banner__note">Cifras ilustrativas para este prototipo.</p>
+</section>
+
+<section id="categorias" class="page-section">
+    <div class="container">
+        <div class="section-intro">
+            <div class="section-intro__eyebrow">Explora por interés</div>
+            <h2 class="section-intro__title">Categorías de voluntariado</h2>
+            <p class="section-intro__text">Elegí un área y descubrí oportunidades que se ajustan a tus habilidades y disponibilidad.</p>
+        </div>
+        <div class="grid-5">
             <?php foreach ($categories as $category): ?>
-                <div class="category-card">
-                    <div class="icon" style="background:<?= htmlspecialchars($category['color_hex']) ?>">
+                <a href="<?= BASE_URL ?>?action=search_opportunities" class="category-card">
+                    <div class="icon" style="background:<?= htmlspecialchars($category['color_hex']) ?>;color:<?= contrastColor($category['color_hex']) ?>">
                         <i class="fa-solid <?= htmlspecialchars($category['icon']) ?>"></i>
                     </div>
-                    <div style="font-size:13.5px;font-weight:600;color:var(--color-primary)">
-                        <?= htmlspecialchars($category['name']) ?>
+                    <h3 class="category-card__title"><?= htmlspecialchars($category['name']) ?></h3>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section id="oportunidades" class="page-section page-section--muted">
+    <div class="container">
+        <div class="section-intro">
+            <div class="section-intro__eyebrow">Recién publicadas</div>
+            <h2 class="section-intro__title">Oportunidades destacadas</h2>
+            <p class="section-intro__text">Una muestra de lo que las organizaciones están publicando esta semana.</p>
+        </div>
+        <div class="grid-3">
+            <?php foreach ($featuredOpportunities as $opportunity): ?>
+                <div class="opportunity-card">
+                    <div class="opportunity-card__photo">
+                        <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="<?= htmlspecialchars($opportunity['photoAlt']) ?>">
+                        <span class="opportunity-card__badge" style="background:#E9A227;color:#4a3106"><?= htmlspecialchars($opportunity['slots']) ?> cupos</span>
+                        <span class="opportunity-card__tag"><?= htmlspecialchars($opportunity['tag']) ?></span>
+                    </div>
+                    <div class="opportunity-card__body">
+                        <h3 class="opportunity-card__title"><?= htmlspecialchars($opportunity['title']) ?></h3>
+                        <div class="opportunity-card__org"><?= htmlspecialchars($opportunity['org']) ?></div>
+                        <div class="opportunity-card__meta">
+                            <span class="opportunity-card__meta-item"><i class="fa-regular fa-calendar"></i> <?= htmlspecialchars($opportunity['date']) ?></span>
+                            <span class="opportunity-card__meta-item"><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars($opportunity['location']) ?></span>
+                        </div>
+                        <a href="<?= BASE_URL ?>?action=view_opportunity" class="btn btn--secondary btn--full-width">Ver detalle</a>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
-
-        <p style="margin-top:44px;font-size:12.5px;color:#a8a8a3">
-            Próximo paso del plan: registro y login (Paso 2).
-        </p>
+        <div style="text-align:center;margin-top:36px">
+            <a href="<?= BASE_URL ?>?action=search_opportunities" class="btn btn--primary">Ver todas las oportunidades <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
     </div>
+</section>
+
+<section id="como-funciona" class="page-section">
+    <div class="container">
+        <div class="section-intro" style="margin-bottom:44px">
+            <div class="section-intro__eyebrow">Es simple</div>
+            <h2 class="section-intro__title">¿Cómo funciona Enlaza?</h2>
+        </div>
+        <div style="display:flex;justify-content:center;gap:10px;margin-bottom:44px">
+            <button type="button" class="pill-filter pill-filter--active" data-how-tab="volunteer">Soy voluntario</button>
+            <button type="button" class="pill-filter" data-how-tab="organization">Soy organización</button>
+        </div>
+
+        <div class="steps-grid" data-how-panel="volunteer">
+            <div class="step">
+                <div class="step__number">1</div>
+                <h3 class="step__title">Registrate y creá tu perfil</h3>
+                <p class="step__text">Indicá tus habilidades, intereses, disponibilidad y ubicación.</p>
+            </div>
+            <div class="step">
+                <div class="step__number">2</div>
+                <h3 class="step__title">Explorá y filtrá oportunidades</h3>
+                <p class="step__text">Buscá por categoría, ubicación y fecha, o recibí recomendaciones según tu perfil.</p>
+            </div>
+            <div class="step">
+                <div class="step__number">3</div>
+                <h3 class="step__title">Inscribite y participá</h3>
+                <p class="step__text">Dale seguimiento al estado de tu inscripción y sumate a la actividad.</p>
+            </div>
+        </div>
+
+        <div class="steps-grid" data-how-panel="organization" style="display:none">
+            <div class="step">
+                <div class="step__number">1</div>
+                <h3 class="step__title">Completá tu perfil institucional</h3>
+                <p class="step__text">Nombre, descripción y datos de contacto de tu organización.</p>
+            </div>
+            <div class="step">
+                <div class="step__number">2</div>
+                <h3 class="step__title">Publicá tu oportunidad</h3>
+                <p class="step__text">Título, descripción, habilidades requeridas, ubicación, fecha y cupos.</p>
+            </div>
+            <div class="step">
+                <div class="step__number">3</div>
+                <h3 class="step__title">Gestioná tus inscripciones</h3>
+                <p class="step__text">Revisá perfiles y aceptá o rechazá inscripciones de voluntarios.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonial">
+    <div class="container">
+        <blockquote class="testimonial__quote">"Juntos generamos cambios que importan."</blockquote>
+        <div class="testimonial__author">— Ana, voluntaria en Enlaza (testimonio ilustrativo)</div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container">
+        <h2 class="cta-band__title">¿Listo para generar un cambio en tu comunidad?</h2>
+        <p class="cta-band__text">Uníte a Enlaza hoy, ya sea que querás ofrecer tu tiempo o encontrar las manos que tu organización necesita.</p>
+        <div class="cta-band__actions">
+            <a href="<?= BASE_URL ?>?action=register&tab=register" class="btn btn--primary">Quiero ser voluntario</a>
+            <a href="<?= BASE_URL ?>?action=publish_opportunity" class="btn btn--secondary btn--outline-light">Quiero publicar oportunidades</a>
+        </div>
+    </div>
+</section>
+
+<?php require __DIR__ . '/partials/footer.php'; ?>
+
+<script src="<?= BASE_URL ?>assets/js/home.js"></script>
 </body>
 </html>

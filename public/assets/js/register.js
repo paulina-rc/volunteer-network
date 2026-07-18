@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var tabButtons = document.querySelectorAll('.tabs__button');
+    var tabButtons = document.querySelectorAll('.segmented__option');
     var panels = document.querySelectorAll('.tabs__panel');
 
     tabButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             var target = button.dataset.tab;
-            tabButtons.forEach(function (b) { b.classList.toggle('tabs__button--active', b === button); });
+            tabButtons.forEach(function (b) { b.classList.toggle('segmented__option--active', b === button); });
             panels.forEach(function (p) { p.classList.toggle('tabs__panel--active', p.dataset.panel === target); });
         });
     });

@@ -5,7 +5,7 @@ class EnrollmentController
 {
     public function manage(): void
     {
-        renderPending('Gestionar inscripciones', 'Se implementa en el Paso 6 del plan de desarrollo (RF08, CU06).');
+        require __DIR__ . '/../views/enrollment_management.php';
     }
 
     public function enroll(): void

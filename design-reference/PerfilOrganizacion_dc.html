@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Comfortaa:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></link>
+  <style>
+    body{ margin:0; font-family:'Poppins',sans-serif; color:#343434; background:#F8F7F4; line-height:1.6; }
+    a{ text-decoration:none; color:#0F4C5C; }
+    a:hover{ color:#F26B4A; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="1,1" style="position:fixed;top:-999px;left:-999px;width:1px;height:1px;overflow:hidden"></x-import>
+
+<header style="background:rgba(248,247,244,0.97);backdrop-filter:blur(6px);position:sticky;top:0;z-index:998;border-bottom:1px solid rgba(15,76,92,0.08)">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;gap:24px">
+    <a href="Home.dc.html" style="font-family:'Comfortaa',sans-serif;font-weight:700;font-size:22px;color:#0F4C5C">Enlaza</a>
+    <nav style="display:flex;gap:30px">
+      <a href="Home.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C">Inicio</a>
+      <a href="Busqueda.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C">Oportunidades</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px">
+      <a href="PublicarOportunidad.dc.html" style="padding:11px 22px;border-radius:999px;background:#F26B4A;color:#fff;font-weight:600;font-size:14px">Publicar oportunidad</a>
+      <div style="display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:#A8C9A1">
+        <div style="width:32px;height:32px;border-radius:50%;background:#0F4C5C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">FV</div>
+        <span style="font-size:14px;font-weight:600;color:#0B3945">Verde Norte</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section style="position:relative;height:200px">
+  <image-slot id="org-portada" shape="rect" placeholder="foto: equipo de la fundación trabajando en vivero forestal" style="width:100%;height:100%"></image-slot>
+</section>
+
+<section style="background:#fff;border-bottom:1px solid #EFECE3">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;transform:translateY(-40px)">
+    <div style="width:96px;height:96px;border-radius:16px;background:#0F4C5C;border:4px solid #fff;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-size:26px;font-weight:700;color:#fff;flex-shrink:0">FV</div>
+    <div style="flex:1;min-width:240px;padding-bottom:6px">
+      <h1 style="font-family:'Archivo',sans-serif;font-size:24px;font-weight:700;color:#0F4C5C;margin:0 0 4px">Fundación Verde Norte</h1>
+      <div style="font-size:13.5px;color:#6d6d68;display:flex;gap:16px;flex-wrap:wrap">
+        <span><i class="fa-solid fa-location-dot"></i> San Carlos, Alajuela</span>
+        <span><i class="fa-solid fa-leaf"></i> Ambiental</span>
+        <span><i class="fa-regular fa-calendar"></i> Aliada desde 2019</span>
+      </div>
+    </div>
+    <div style="padding-bottom:6px">
+      <button style="padding:11px 22px;border-radius:999px;border:1.5px solid #0F4C5C;color:#0F4C5C;background:transparent;font-weight:600;font-size:14px;cursor:pointer">Editar perfil</button>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0 0 76px">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:40px;margin-bottom:44px">
+      <div>
+        <h2 style="font-family:'Archivo',sans-serif;font-size:18px;font-weight:700;color:#0F4C5C;margin:0 0 12px">Sobre la organización</h2>
+        <p style="font-size:14.5px;color:#5c5c58;margin:0">Trabajamos en restauración de bosques y educación ambiental en la Zona Norte desde 2011. Coordinamos jornadas de reforestación, viveros comunitarios y talleres para escuelas de la región.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="background:#fff;border:1px solid #EFECE3;border-radius:14px;padding:18px;text-align:center">
+          <div style="font-family:'Archivo',sans-serif;font-size:24px;font-weight:800;color:#0F4C5C">9</div>
+          <div style="font-size:12px;color:#8a8a85;margin-top:4px">Oportunidades publicadas</div>
+        </div>
+        <div style="background:#fff;border:1px solid #EFECE3;border-radius:14px;padding:18px;text-align:center">
+          <div style="font-family:'Archivo',sans-serif;font-size:24px;font-weight:800;color:#0F4C5C">142</div>
+          <div style="font-size:12px;color:#8a8a85;margin-top:4px">Voluntarios apoyados</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <h2 style="font-family:'Archivo',sans-serif;font-size:20px;font-weight:700;color:#0F4C5C;margin:0">Oportunidades publicadas</h2>
+      <a href="GestionInscripciones.dc.html" style="font-size:14px;font-weight:600;color:#0F4C5C">Gestionar inscripciones <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <sc-for list="{{ oportunidades }}" as="op" hint-placeholder-count="3">
+        <div style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid #EFECE3">
+          <div style="height:150px;position:relative">
+            <image-slot id="{{ op.imgId }}" shape="rect" placeholder="{{ op.fotoDesc }}" style="width:100%;height:100%"></image-slot>
+            <span style="position:absolute;top:14px;right:14px;background:{{ op.estadoFondo }};color:{{ op.estadoTexto }};font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px">{{ op.estado }}</span>
+          </div>
+          <div style="padding:16px 18px 18px">
+            <div style="font-size:11px;font-weight:600;color:#F26B4A;text-transform:uppercase;letter-spacing:.05em">{{ op.tag }}</div>
+            <h3 style="font-size:15px;font-weight:600;margin:6px 0 8px;color:#343434">{{ op.titulo }}</h3>
+            <div style="font-size:12px;color:#6d6d68;margin-bottom:14px">{{ op.inscritos }} inscritos · {{ op.cupos }} cupos</div>
+            <a href="DetalleOportunidad.dc.html" style="display:block;text-align:center;padding:9px;font-size:13px;font-weight:600;border-radius:999px;border:1.5px solid #0F4C5C;color:#0F4C5C">Ver / editar</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      oportunidades: [
+        { tag: 'Ambiental', titulo: 'Jornada de reforestación río San Carlos', inscritos: 12, cupos: 20, estado: 'Activa', estadoFondo: '#A8C9A1', estadoTexto: '#0B3945', imgId: 'org-op-1', fotoDesc: 'reforestación' },
+        { tag: 'Ambiental', titulo: 'Vivero comunitario — mantenimiento', inscritos: 5, cupos: 10, estado: 'Activa', estadoFondo: '#A8C9A1', estadoTexto: '#0B3945', imgId: 'org-op-2', fotoDesc: 'vivero forestal' },
+        { tag: 'Ambiental', titulo: 'Taller de reciclaje en escuela rural', inscritos: 18, cupos: 18, estado: 'Cerrada', estadoFondo: '#F1EEE6', estadoTexto: '#8a8a85', imgId: 'org-op-3', fotoDesc: 'taller de reciclaje escolar' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

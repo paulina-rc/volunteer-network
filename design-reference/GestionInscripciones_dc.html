@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Comfortaa:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></link>
+  <style>
+    body{ margin:0; font-family:'Poppins',sans-serif; color:#343434; background:#F8F7F4; line-height:1.6; }
+    a{ text-decoration:none; color:#0F4C5C; }
+    a:hover{ color:#F26B4A; }
+  </style>
+</helmet>
+
+<header style="background:rgba(248,247,244,0.97);backdrop-filter:blur(6px);position:sticky;top:0;z-index:998;border-bottom:1px solid rgba(15,76,92,0.08)">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;gap:24px">
+    <a href="Home.dc.html" style="font-family:'Comfortaa',sans-serif;font-weight:700;font-size:22px;color:#0F4C5C">Enlaza</a>
+    <a href="PerfilOrganizacion.dc.html" style="font-size:14px;font-weight:500;color:#0F4C5C"><i class="fa-solid fa-arrow-left"></i> Volver a mi perfil</a>
+  </div>
+</header>
+
+<section style="max-width:1000px;margin:0 auto;padding:40px 24px 90px">
+  <h1 style="font-family:'Archivo',sans-serif;font-size:26px;font-weight:700;color:#0F4C5C;margin:0 0 6px">Gestionar inscripciones</h1>
+  <p style="font-size:14px;color:#6d6d68;margin:0 0 28px">Jornada de reforestación río San Carlos · 24 de agosto, 2026</p>
+
+  <div style="display:flex;gap:10px;margin-bottom:28px">
+    <button onClick="{{ elegirTodas }}" style="padding:9px 20px;border-radius:999px;border:1.5px solid #0F4C5C;font-weight:600;font-size:13.5px;cursor:pointer;background:{{ fondoTodas }};color:{{ textoTodas }}">Todas ({{ totalTodas }})</button>
+    <button onClick="{{ elegirPendientes }}" style="padding:9px 20px;border-radius:999px;border:1.5px solid #0F4C5C;font-weight:600;font-size:13.5px;cursor:pointer;background:{{ fondoPendientes }};color:{{ textoPendientes }}">Pendientes ({{ totalPendientes }})</button>
+    <button onClick="{{ elegirAceptadas }}" style="padding:9px 20px;border-radius:999px;border:1.5px solid #0F4C5C;font-weight:600;font-size:13.5px;cursor:pointer;background:{{ fondoAceptadas }};color:{{ textoAceptadas }}">Aceptadas ({{ totalAceptadas }})</button>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{ visibles }}" as="v" hint-placeholder-count="4">
+      <div style="background:#fff;border:1px solid #EFECE3;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="width:44px;height:44px;border-radius:50%;background:#A8C9A1;color:#0B3945;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">{{ v.iniciales }}</div>
+        <div style="flex:1;min-width:200px">
+          <div style="font-size:14.5px;font-weight:600;color:#343434">{{ v.nombre }}</div>
+          <div style="font-size:12.5px;color:#8a8a85">{{ v.correo }} · Inscrita el {{ v.fechaInscripcion }}</div>
+        </div>
+        <div style="padding:6px 14px;border-radius:999px;font-size:11.5px;font-weight:700;background:{{ v.estadoFondo }};color:{{ v.estadoTexto }}">{{ v.estado }}</div>
+        <sc-if value="{{ v.esPendiente }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:8px">
+            <button onClick="{{ v.aceptar }}" style="padding:9px 16px;border-radius:999px;background:#0F4C5C;color:#fff;font-weight:600;font-size:12.5px;border:none;cursor:pointer">Aceptar</button>
+            <button onClick="{{ v.rechazar }}" style="padding:9px 16px;border-radius:999px;border:1.5px solid #E7E4DC;color:#6d6d68;background:transparent;font-weight:600;font-size:12.5px;cursor:pointer">Rechazar</button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+    <sc-if value="{{ sinResultados }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:50px 0;color:#8a8a85;font-size:14px">No hay inscripciones en esta categoría.</div>
+    </sc-if>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    filtro: 'todas',
+    personas: [
+      { nombre: 'Ana Rodríguez', correo: 'ana.rodriguez@correo.com', iniciales: 'AR', fechaInscripcion: '10 ago', estado: 'aceptada' },
+      { nombre: 'Luis Vargas', correo: 'luis.vargas@correo.com', iniciales: 'LV', fechaInscripcion: '11 ago', estado: 'pendiente' },
+      { nombre: 'Kimberly Solano', correo: 'kimberly.solano@correo.com', iniciales: 'KS', fechaInscripcion: '12 ago', estado: 'pendiente' },
+      { nombre: 'Josué Alfaro', correo: 'josue.alfaro@correo.com', iniciales: 'JA', fechaInscripcion: '13 ago', estado: 'rechazada' },
+      { nombre: 'Melany Rojas', correo: 'melany.rojas@correo.com', iniciales: 'MR', fechaInscripcion: '13 ago', estado: 'aceptada' },
+    ],
+  };
+
+  estadoTexto(e) {
+    return { pendiente: 'Pendiente', aceptada: 'Aceptada', rechazada: 'Rechazada' }[e];
+  }
+  estadoColores(e) {
+    if (e === 'aceptada') return { fondo: '#A8C9A1', texto: '#0B3945' };
+    if (e === 'pendiente') return { fondo: '#E9A227', texto: '#4a3106' };
+    return { fondo: '#F1EEE6', texto: '#8a8a85' };
+  }
+
+  renderVals() {
+    const personas = this.state.personas;
+    const decorar = p => {
+      const c = this.estadoColores(p.estado);
+      return {
+        ...p,
+        estado: this.estadoTexto(p.estado),
+        estadoFondo: c.fondo, estadoTexto: c.texto,
+        esPendiente: p.estado === 'pendiente',
+        aceptar: () => this.setState(s => ({ personas: s.personas.map(x => x === p ? { ...x, estado: 'aceptada' } : x) })),
+        rechazar: () => this.setState(s => ({ personas: s.personas.map(x => x === p ? { ...x, estado: 'rechazada' } : x) })),
+      };
+    };
+    const filtro = this.state.filtro;
+    const visibles = personas.filter(p => filtro === 'todas' || p.estado === filtro).map(decorar);
+    return {
+      visibles,
+      sinResultados: visibles.length === 0,
+      totalTodas: personas.length,
+      totalPendientes: personas.filter(p => p.estado === 'pendiente').length,
+      totalAceptadas: personas.filter(p => p.estado === 'aceptada').length,
+      fondoTodas: filtro === 'todas' ? '#0F4C5C' : 'transparent', textoTodas: filtro === 'todas' ? '#fff' : '#0F4C5C',
+      fondoPendientes: filtro === 'pendiente' ? '#0F4C5C' : 'transparent', textoPendientes: filtro === 'pendiente' ? '#fff' : '#0F4C5C',
+      fondoAceptadas: filtro === 'aceptada' ? '#0F4C5C' : 'transparent', textoAceptadas: filtro === 'aceptada' ? '#fff' : '#0F4C5C',
+      elegirTodas: () => this.setState({ filtro: 'todas' }),
+      elegirPendientes: () => this.setState({ filtro: 'pendiente' }),
+      elegirAceptadas: () => this.setState({ filtro: 'aceptada' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

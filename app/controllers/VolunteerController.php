@@ -5,7 +5,7 @@ class VolunteerController
 {
     public function viewProfile(): void
     {
-        renderPending('Perfil de voluntario', 'Se implementa en el Paso 3 del plan de desarrollo (RF03).');
+        require __DIR__ . '/../views/volunteer_profile.php';
     }
 
     public function saveProfile(): void

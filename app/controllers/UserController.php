@@ -5,7 +5,8 @@ class UserController
 {
     public function showRegister(): void
     {
-        $this->render();
+        $tab = $_GET['tab'] ?? 'login';
+        $this->render($tab === 'register' ? 'register' : 'login');
     }
 
     public function register(): void

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Comfortaa:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></link>
+  <style>
+    body{ margin:0; font-family:'Poppins',sans-serif; color:#343434; background:#F8F7F4; line-height:1.6; }
+    a{ text-decoration:none; color:#0F4C5C; }
+    a:hover{ color:#F26B4A; }
+    ::selection{ background:#A8C9A1; }
+  </style>
+</helmet>
+
+<x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="1,1" style="position:fixed;top:-999px;left:-999px;width:1px;height:1px;overflow:hidden"></x-import>
+
+<div style="max-width:1180px;margin:0 auto 0;padding:12px 24px 0;display:flex;justify-content:flex-end">
+  <a href="Registro.dc.html" style="font-size:12px;color:#8a8a85">Prototipo Enlaza · <span style="color:#0F4C5C;font-weight:600">ver todas las páginas ›</span></a>
+</div>
+
+<header style="background:rgba(248,247,244,0.97);backdrop-filter:blur(6px);position:sticky;top:0;z-index:998;border-bottom:1px solid rgba(15,76,92,0.08)">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;gap:24px">
+    <a href="Home.dc.html" style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <span style="font-family:'Comfortaa',sans-serif;font-weight:700;font-size:22px;color:#0F4C5C">Enlaza</span>
+    </a>
+    <nav style="display:flex;gap:30px">
+      <a href="Home.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C;border-bottom:2px solid #F26B4A;padding-bottom:6px">Inicio</a>
+      <a href="Busqueda.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C">Oportunidades</a>
+      <a href="PerfilOrganizacion.dc.html" style="font-size:15px;font-weight:500;color:#0F4C5C">Organizaciones</a>
+      <a href="#como-funciona" style="font-size:15px;font-weight:500;color:#0F4C5C">Nosotros</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px;flex-shrink:0">
+      <a href="Busqueda.dc.html" title="Buscar" style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#0F4C5C;border:1px solid rgba(15,76,92,0.15)">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </a>
+      <a href="Registro.dc.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:11px 22px;border-radius:999px;border:1.5px solid #0F4C5C;color:#0F4C5C">Iniciar sesión</a>
+      <a href="Registro.dc.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:11px 22px;border-radius:999px;background:#F26B4A;color:#fff">Registrarme</a>
+    </div>
+  </div>
+</header>
+
+<section style="position:relative;overflow:hidden;height:640px">
+  <sc-for list="{{ slides }}" as="slide" hint-placeholder-count="3">
+    <div style="position:absolute;inset:0;opacity:{{ slide.opacidad }};transition:opacity 1s ease;display:flex;align-items:center;background:{{ slide.fondo }}">
+      <div style="position:absolute;inset:0"><image-slot id="{{ slide.imgId }}" shape="rect" placeholder="{{ slide.fotoDesc }}" style="width:100%;height:100%;filter:saturate(0.9)"></image-slot></div>
+      <div style="position:absolute;inset:0;background:{{ slide.tinte }};mix-blend-mode:multiply"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(100deg, rgba(11,57,69,0.72) 20%, rgba(11,57,69,0.32) 55%, rgba(11,57,69,0.08) 80%)"></div>
+      <div style="position:relative;z-index:2;color:#fff;max-width:640px;padding:0 24px;margin:0 auto;width:100%">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:500;margin-bottom:22px">
+          <i class="fa-solid {{ slide.icono }}" style="color:#E9A227"></i> {{ slide.eyebrow }}
+        </div>
+        <h1 style="font-family:'Archivo',sans-serif;font-size:44px;line-height:1.15;font-weight:700;margin:0 0 16px">{{ slide.titulo }}</h1>
+        <p style="font-size:17px;opacity:.94;margin:0 0 30px;max-width:520px">{{ slide.texto }}</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="{{ slide.cta1Link }}" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:12px 24px;border-radius:999px;background:#F26B4A;color:#fff">{{ slide.cta1 }} <i class="fa-solid fa-arrow-right"></i></a>
+          <sc-if value="{{ slide.cta2 }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ slide.cta2Link }}" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:12px 24px;border-radius:999px;background:#fff;color:#0F4C5C">{{ slide.cta2 }}</a>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-for>
+
+  <button onClick="{{ irSlideAnterior }}" style="position:absolute;top:50%;left:24px;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px"><i class="fa-solid fa-chevron-left"></i></button>
+  <button onClick="{{ irSlideSiguiente }}" style="position:absolute;top:50%;right:24px;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px"><i class="fa-solid fa-chevron-right"></i></button>
+  <div style="position:absolute;bottom:100px;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:8px">
+    <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
+      <div onClick="{{ d.ir }}" style="width:{{ d.ancho }};height:9px;border-radius:5px;background:{{ d.color }};cursor:pointer;transition:.2s"></div>
+    </sc-for>
+  </div>
+</section>
+
+<div style="position:relative;z-index:5;max-width:980px;margin:-58px auto 0;background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(15,76,92,0.12);padding:22px 26px;display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap">
+  <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:160px">
+    <label style="font-size:12px;font-weight:600;color:#0F4C5C;text-transform:uppercase;letter-spacing:.04em">¿Qué buscás?</label>
+    <div style="display:flex;align-items:center;gap:8px;border:1.5px solid #E7E4DC;border-radius:10px;padding:10px 12px">
+      <i class="fa-solid fa-magnifying-glass" style="color:#F26B4A;font-size:14px"></i>
+      <input type="text" placeholder="Ej. reforestación, tutorías, feria de salud..." style="border:none;outline:none;font-family:'Poppins',sans-serif;font-size:14px;width:100%;background:transparent;color:#343434"></input>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:160px">
+    <label style="font-size:12px;font-weight:600;color:#0F4C5C;text-transform:uppercase;letter-spacing:.04em">Categoría</label>
+    <div style="display:flex;align-items:center;gap:8px;border:1.5px solid #E7E4DC;border-radius:10px;padding:10px 12px">
+      <i class="fa-solid fa-layer-group" style="color:#F26B4A;font-size:14px"></i>
+      <select style="border:none;outline:none;font-family:'Poppins',sans-serif;font-size:14px;width:100%;background:transparent;color:#343434">
+        <option>Todas las categorías</option>
+        <option>Comunitario</option>
+        <option>Cultural</option>
+        <option>Educativo</option>
+        <option>Salud</option>
+        <option>Ambiental</option>
+      </select>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:160px">
+    <label style="font-size:12px;font-weight:600;color:#0F4C5C;text-transform:uppercase;letter-spacing:.04em">Ubicación</label>
+    <div style="display:flex;align-items:center;gap:8px;border:1.5px solid #E7E4DC;border-radius:10px;padding:10px 12px">
+      <i class="fa-solid fa-location-dot" style="color:#F26B4A;font-size:14px"></i>
+      <input type="text" placeholder="San Carlos, Alajuela..." style="border:none;outline:none;font-family:'Poppins',sans-serif;font-size:14px;width:100%;background:transparent;color:#343434"></input>
+    </div>
+  </div>
+  <a href="Busqueda.dc.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:13px 26px;margin-bottom:1px;border-radius:999px;background:#F26B4A;color:#fff"><i class="fa-solid fa-magnifying-glass"></i> Buscar</a>
+</div>
+
+<section style="background:#0F4C5C;color:#fff;padding:46px 0 40px;margin-top:64px">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center">
+    <div><div style="font-family:'Archivo',sans-serif;font-size:34px;font-weight:800;color:#E9A227">120+</div><div style="font-size:13px;opacity:.85;margin-top:4px">Oportunidades activas</div></div>
+    <div><div style="font-family:'Archivo',sans-serif;font-size:34px;font-weight:800;color:#E9A227">45+</div><div style="font-size:13px;opacity:.85;margin-top:4px">Organizaciones aliadas</div></div>
+    <div><div style="font-family:'Archivo',sans-serif;font-size:34px;font-weight:800;color:#E9A227">800+</div><div style="font-size:13px;opacity:.85;margin-top:4px">Voluntarios conectados</div></div>
+    <div><div style="font-family:'Archivo',sans-serif;font-size:34px;font-weight:800;color:#E9A227">12</div><div style="font-size:13px;opacity:.85;margin-top:4px">Comunidades impactadas</div></div>
+  </div>
+  <p style="text-align:center;font-size:11px;opacity:.55;margin-top:20px">Cifras ilustrativas para este prototipo.</p>
+</section>
+
+<section id="categorias" style="padding:76px 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <div style="text-align:center;max-width:640px;margin:0 auto 48px">
+      <div style="font-size:13px;font-weight:600;color:#F26B4A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Explora por interés</div>
+      <h2 style="font-family:'Archivo',sans-serif;font-size:30px;font-weight:700;color:#0F4C5C;margin:0 0 12px">Categorías de voluntariado</h2>
+      <p style="color:#5c5c58;font-size:15px;margin:0">Elegí un área y descubrí oportunidades que se ajustan a tus habilidades y disponibilidad.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px">
+      <sc-for list="{{ categorias }}" as="cat" hint-placeholder-count="5">
+        <a href="{{ cat.link }}" style="background:#fff;border-radius:16px;padding:26px 18px;text-align:center;border:1px solid #EFECE3;display:block">
+          <div style="width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;color:{{ cat.colorIcono }};background:{{ cat.color }}">
+            <i class="fa-solid {{ cat.icono }}"></i>
+          </div>
+          <h3 style="font-size:15px;font-weight:600;color:#0F4C5C;margin:0 0 6px">{{ cat.nombre }}</h3>
+          <p style="font-size:12.5px;color:#7a7a75;margin:0">{{ cat.desc }}</p>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="oportunidades" style="padding:76px 0;background:#F1EEE6">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <div style="text-align:center;max-width:640px;margin:0 auto 48px">
+      <div style="font-size:13px;font-weight:600;color:#F26B4A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Recién publicadas</div>
+      <h2 style="font-family:'Archivo',sans-serif;font-size:30px;font-weight:700;color:#0F4C5C;margin:0 0 12px">Oportunidades destacadas</h2>
+      <p style="color:#5c5c58;font-size:15px;margin:0">Una muestra de lo que las organizaciones están publicando esta semana.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+      <sc-for list="{{ oportunidades }}" as="op" hint-placeholder-count="3">
+        <div style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid #EFECE3">
+          <div style="height:170px;position:relative">
+            <image-slot id="{{ op.imgId }}" shape="rect" placeholder="{{ op.fotoDesc }}" style="width:100%;height:100%"></image-slot>
+            <span style="position:absolute;top:14px;right:14px;background:#E9A227;color:#4a3106;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px">{{ op.cupos }} cupos</span>
+            <span style="position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,.92);color:#0F4C5C;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px">{{ op.tag }}</span>
+          </div>
+          <div style="padding:18px 18px 20px">
+            <h3 style="font-size:16px;font-weight:600;margin:2px 0 6px;color:#343434">{{ op.titulo }}</h3>
+            <div style="font-size:12.5px;color:#8a8a85;margin-bottom:12px">{{ op.org }}</div>
+            <div style="display:flex;gap:14px;font-size:12px;color:#6d6d68;margin-bottom:16px;flex-wrap:wrap">
+              <span style="display:flex;align-items:center;gap:5px"><i class="fa-regular fa-calendar" style="color:#0F4C5C"></i> {{ op.fecha }}</span>
+              <span style="display:flex;align-items:center;gap:5px"><i class="fa-solid fa-location-dot" style="color:#0F4C5C"></i> {{ op.ubicacion }}</span>
+            </div>
+            <a href="{{ op.link }}" style="display:flex;width:100%;justify-content:center;padding:10px;font-size:13px;font-weight:600;border-radius:999px;border:1.5px solid #0F4C5C;color:#0F4C5C">Ver detalle</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <a href="Busqueda.dc.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:12px 26px;border-radius:999px;background:#F26B4A;color:#fff">Ver todas las oportunidades <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona" style="padding:76px 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <div style="text-align:center;max-width:640px;margin:0 auto 44px">
+      <div style="font-size:13px;font-weight:600;color:#F26B4A;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Es simple</div>
+      <h2 style="font-family:'Archivo',sans-serif;font-size:30px;font-weight:700;color:#0F4C5C;margin:0">¿Cómo funciona Enlaza?</h2>
+    </div>
+    <div style="display:flex;justify-content:center;gap:10px;margin-bottom:44px">
+      <button onClick="{{ elegirTabVoluntario }}" style="padding:10px 24px;border-radius:999px;border:1.5px solid #0F4C5C;font-weight:600;font-size:14px;cursor:pointer;background:{{ tabVoluntarioFondo }};color:{{ tabVoluntarioTexto }}">Soy voluntario</button>
+      <button onClick="{{ elegirTabOrganizacion }}" style="padding:10px 24px;border-radius:999px;border:1.5px solid #0F4C5C;font-weight:600;font-size:14px;cursor:pointer;background:{{ tabOrgFondo }};color:{{ tabOrgTexto }}">Soy organización</button>
+    </div>
+    <sc-if value="{{ mostrarVoluntario }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+        <div style="text-align:center;padding:0 12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:#A8C9A1;color:#0B3945;font-family:'Archivo',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:17px">1</div>
+          <h3 style="font-size:15.5px;font-weight:600;color:#0F4C5C;margin:0 0 8px">Registrate y creá tu perfil</h3>
+          <p style="font-size:13.5px;color:#6d6d68;margin:0">Indicá tus habilidades, intereses, disponibilidad y ubicación.</p>
+        </div>
+        <div style="text-align:center;padding:0 12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:#A8C9A1;color:#0B3945;font-family:'Archivo',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:17px">2</div>
+          <h3 style="font-size:15.5px;font-weight:600;color:#0F4C5C;margin:0 0 8px">Explorá y filtrá oportunidades</h3>
+          <p style="font-size:13.5px;color:#6d6d68;margin:0">Buscá por categoría, ubicación y fecha, o recibí recomendaciones según tu perfil.</p>
+        </div>
+        <div style="text-align:center;padding:0 12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:#A8C9A1;color:#0B3945;font-family:'Archivo',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:17px">3</div>
+          <h3 style="font-size:15.5px;font-weight:600;color:#0F4C5C;margin:0 0 8px">Inscribite y participá</h3>
+          <p style="font-size:13.5px;color:#6d6d68;margin:0">Dale seguimiento al estado de tu inscripción y sumate a la actividad.</p>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ mostrarOrganizacion }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+        <div style="text-align:center;padding:0 12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:#A8C9A1;color:#0B3945;font-family:'Archivo',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:17px">1</div>
+          <h3 style="font-size:15.5px;font-weight:600;color:#0F4C5C;margin:0 0 8px">Completá tu perfil institucional</h3>
+          <p style="font-size:13.5px;color:#6d6d68;margin:0">Nombre, descripción y datos de contacto de tu organización.</p>
+        </div>
+        <div style="text-align:center;padding:0 12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:#A8C9A1;color:#0B3945;font-family:'Archivo',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:17px">2</div>
+          <h3 style="font-size:15.5px;font-weight:600;color:#0F4C5C;margin:0 0 8px">Publicá tu oportunidad</h3>
+          <p style="font-size:13.5px;color:#6d6d68;margin:0">Título, descripción, habilidades requeridas, ubicación, fecha y cupos.</p>
+        </div>
+        <div style="text-align:center;padding:0 12px">
+          <div style="width:48px;height:48px;border-radius:50%;background:#A8C9A1;color:#0B3945;font-family:'Archivo',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:17px">3</div>
+          <h3 style="font-size:15.5px;font-weight:600;color:#0F4C5C;margin:0 0 8px">Gestioná tus inscripciones</h3>
+          <p style="font-size:13.5px;color:#6d6d68;margin:0">Revisá perfiles y aceptá o rechazá inscripciones de voluntarios.</p>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<section style="background:#A8C9A1;padding:64px 0;text-align:center">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <blockquote style="font-family:'Archivo',sans-serif;font-size:26px;color:#0B3945;max-width:720px;margin:0 auto 22px;font-weight:700;line-height:1.4">"Juntos generamos cambios que importan."</blockquote>
+    <div style="font-size:13px;color:#0B3945;opacity:.75">— Ana, voluntaria en Enlaza (testimonio ilustrativo)</div>
+  </div>
+</section>
+
+<section style="background:linear-gradient(120deg, #0F4C5C, #0B3945);color:#fff;text-align:center;padding:72px 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <h2 style="font-family:'Archivo',sans-serif;font-size:30px;font-weight:700;margin:0 0 14px">¿Listo para generar un cambio en tu comunidad?</h2>
+    <p style="opacity:.85;max-width:520px;margin:0 auto 30px;font-size:15px">Uníte a Enlaza hoy, ya sea que querás ofrecer tu tiempo o encontrar las manos que tu organización necesita.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="Registro.dc.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:12px 24px;border-radius:999px;background:#F26B4A;color:#fff">Quiero ser voluntario</a>
+      <a href="PublicarOportunidad.dc.html" style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:12px 24px;border-radius:999px;border:1.5px solid #fff;color:#fff">Quiero publicar oportunidades</a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#0B3945;color:#dfe8e6;padding:60px 0 0">
+  <div style="max-width:1180px;margin:0 auto;padding:0 24px">
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.1)">
+      <div>
+        <div style="font-family:'Comfortaa',sans-serif;font-weight:700;font-size:20px;color:#fff;margin-bottom:14px">Enlaza</div>
+        <p style="font-size:13.5px;color:#b9cbc7;max-width:280px;margin-bottom:18px">La tecnología al servicio de la comunidad. Conectamos voluntarios con organizaciones sin fines de lucro.</p>
+        <div style="display:flex;gap:10px">
+          <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#dfe8e6"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#dfe8e6"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#dfe8e6"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#" style="width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#dfe8e6"><i class="fa-regular fa-envelope"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:600;color:#fff;margin:0 0 16px;text-transform:uppercase;letter-spacing:.05em">Plataforma</h4>
+        <ul style="list-style:none;padding:0;margin:0">
+          <li style="margin-bottom:10px"><a href="Busqueda.dc.html" style="font-size:13.5px;color:#b9cbc7">Oportunidades</a></li>
+          <li style="margin-bottom:10px"><a href="PerfilOrganizacion.dc.html" style="font-size:13.5px;color:#b9cbc7">Organizaciones</a></li>
+          <li style="margin-bottom:10px"><a href="#como-funciona" style="font-size:13.5px;color:#b9cbc7">Cómo funciona</a></li>
+          <li style="margin-bottom:10px"><a href="#categorias" style="font-size:13.5px;color:#b9cbc7">Categorías</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:600;color:#fff;margin:0 0 16px;text-transform:uppercase;letter-spacing:.05em">Comunidad</h4>
+        <ul style="list-style:none;padding:0;margin:0">
+          <li style="margin-bottom:10px"><a href="#" style="font-size:13.5px;color:#b9cbc7">Nosotros</a></li>
+          <li style="margin-bottom:10px"><a href="#" style="font-size:13.5px;color:#b9cbc7">Preguntas frecuentes</a></li>
+          <li style="margin-bottom:10px"><a href="#" style="font-size:13.5px;color:#b9cbc7">Contacto</a></li>
+          <li style="margin-bottom:10px"><a href="#" style="font-size:13.5px;color:#b9cbc7">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:600;color:#fff;margin:0 0 16px;text-transform:uppercase;letter-spacing:.05em">Legal</h4>
+        <ul style="list-style:none;padding:0;margin:0">
+          <li style="margin-bottom:10px"><a href="#" style="font-size:13.5px;color:#b9cbc7">Términos de uso</a></li>
+          <li style="margin-bottom:10px"><a href="#" style="font-size:13.5px;color:#b9cbc7">Privacidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="padding:22px 0;display:flex;justify-content:space-between;font-size:12px;color:#8fa6a1;flex-wrap:wrap;gap:10px">
+      <span>© 2026 Enlaza — Benemérito Colegio Agropecuario de San Carlos · Proyecto TIC</span>
+      <span>Conecta. Participa. Transforma.</span>
+    </div>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    heroIndex: 0,
+    tabRol: 'voluntario',
+  };
+
+  componentDidMount() {
+    this._timer = setInterval(() => {
+      this.setState(s => ({ heroIndex: (s.heroIndex + 1) % 3 }));
+    }, 6000);
+  }
+  componentWillUnmount() {
+    clearInterval(this._timer);
+  }
+
+  renderVals() {
+    const slidesBase = [
+      { icono: 'fa-heart', eyebrow: 'Conecta. Participa. Transforma.', titulo: 'Encontrá la oportunidad de voluntariado que va con vos', texto: 'Enlaza conecta a personas con ganas de ayudar y organizaciones sin fines de lucro que necesitan apoyo. La tecnología al servicio de la comunidad.', cta1: 'Quiero ser voluntario', cta1Link: 'Registro.dc.html', cta2: 'Soy una organización', cta2Link: 'Registro.dc.html', fondo: 'linear-gradient(120deg, #0F4C5C 0%, #146579 55%, #A8C9A1 130%)', tinte: 'rgba(15,76,92,0.35)', imgId: 'hero-reforestacion', fotoDesc: 'foto: jornada de reforestación comunitaria a orillas del río San Carlos, luz de mañana' },
+      { icono: 'fa-users', eyebrow: '+45 organizaciones aliadas', titulo: 'Organizaciones que ya están generando cambios reales', texto: 'Publicá tus oportunidades, gestioná inscripciones y encontrá voluntarios afines a tu causa en un solo lugar.', cta1: 'Publicar oportunidad', cta1Link: 'PublicarOportunidad.dc.html', cta2: 'Ver organizaciones', cta2Link: 'PerfilOrganizacion.dc.html', fondo: 'linear-gradient(120deg, #F26B4A 0%, #c9502f 60%, #E9A227 140%)', tinte: 'rgba(11,57,69,0.3)', imgId: 'hero-tutorias', fotoDesc: 'foto: voluntaria dando tutoría a un niño en un aula rural, luz natural de ventana' },
+      { icono: 'fa-seedling', eyebrow: 'Impacto ambiental, social y educativo', titulo: 'Cada hora de voluntariado transforma una comunidad', texto: 'Explorá oportunidades por categoría, ubicación y disponibilidad, y sumate a una causa que te importe.', cta1: 'Explorar oportunidades', cta1Link: 'Busqueda.dc.html', cta2: null, fondo: 'linear-gradient(120deg, #E9A227 0%, #c78415 55%, #0F4C5C 140%)', tinte: 'rgba(15,76,92,0.3)', imgId: 'hero-salud', fotoDesc: 'foto: brigada de salud comunitaria atendiendo a vecinos en una feria rural' },
+    ];
+    const slides = slidesBase.map((s, i) => ({ ...s, opacidad: i === this.state.heroIndex ? 1 : 0 }));
+    const dots = [0, 1, 2].map(i => ({
+      ancho: i === this.state.heroIndex ? '24px' : '9px',
+      color: i === this.state.heroIndex ? '#fff' : 'rgba(255,255,255,.45)',
+      ir: () => this.setState({ heroIndex: i }),
+    }));
+
+    const categorias = [
+      { nombre: 'Comunitario', icono: 'fa-people-group', color: '#0F4C5C', colorIcono: '#fff', desc: 'Cultura local, educación y ocio comunitario', link: 'Busqueda.dc.html' },
+      { nombre: 'Cultural', icono: 'fa-masks-theater', color: '#F26B4A', colorIcono: '#fff', desc: 'Conservación e identidad cultural', link: 'Busqueda.dc.html' },
+      { nombre: 'Educativo', icono: 'fa-book-open', color: '#E9A227', colorIcono: '#fff', desc: 'Alfabetización, tutorías y mentoría', link: 'Busqueda.dc.html' },
+      { nombre: 'Salud', icono: 'fa-heart-pulse', color: '#5C8A78', colorIcono: '#fff', desc: 'Promoción de salud y bienestar', link: 'Busqueda.dc.html' },
+      { nombre: 'Ambiental', icono: 'fa-leaf', color: '#A8C9A1', colorIcono: '#0B3945', desc: 'Reforestación y cuido de recursos', link: 'Busqueda.dc.html' },
+    ];
+
+    const oportunidades = [
+      { tag: 'Ambiental', titulo: 'Jornada de reforestación río San Carlos', org: 'Fundación Verde Norte', fecha: '24 ago 2026', ubicacion: 'San Carlos', cupos: '8', imgId: 'op-reforestacion', fotoDesc: 'foto: voluntarios sembrando árboles junto al río, botas y guantes de trabajo', link: 'DetalleOportunidad.dc.html' },
+      { tag: 'Educativo', titulo: 'Tutorías de matemáticas para primaria', org: 'Asociación Aprender Juntos', fecha: '2 sept 2026', ubicacion: 'Ciudad Quesada', cupos: '3', imgId: 'op-tutorias', fotoDesc: 'foto: tutora y estudiante revisando un cuaderno de matemáticas en un aula', link: 'DetalleOportunidad.dc.html' },
+      { tag: 'Salud', titulo: 'Feria de salud comunitaria', org: 'Cruz Roja — sede local', fecha: '14 sept 2026', ubicacion: 'Florencia', cupos: '12', imgId: 'op-feria-salud', fotoDesc: 'foto: fila de vecinos siendo atendidos en carpa de feria de salud', link: 'DetalleOportunidad.dc.html' },
+    ];
+
+    return {
+      slides, dots, categorias, oportunidades,
+      irSlideAnterior: () => this.setState(s => ({ heroIndex: (s.heroIndex + 2) % 3 })),
+      irSlideSiguiente: () => this.setState(s => ({ heroIndex: (s.heroIndex + 1) % 3 })),
+      mostrarVoluntario: this.state.tabRol === 'voluntario',
+      mostrarOrganizacion: this.state.tabRol === 'organizacion',
+      tabVoluntarioFondo: this.state.tabRol === 'voluntario' ? '#0F4C5C' : 'transparent',
+      tabVoluntarioTexto: this.state.tabRol === 'voluntario' ? '#fff' : '#0F4C5C',
+      tabOrgFondo: this.state.tabRol === 'organizacion' ? '#0F4C5C' : 'transparent',
+      tabOrgTexto: this.state.tabRol === 'organizacion' ? '#fff' : '#0F4C5C',
+      elegirTabVoluntario: () => this.setState({ tabRol: 'voluntario' }),
+      elegirTabOrganizacion: () => this.setState({ tabRol: 'organizacion' }),
+    };
+  }
+}
+</script>
+</body>
+</html>
