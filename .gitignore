@@ -1,7 +1,8 @@
+/vendor/
+/.env
+/config/config.local.php
+*.log
+.DS_Store
+Thumbs.db
 .tmp.driveupload/
-.tmp.drivedownload/
-
 __pycache__/
-*.pyc
-
-.vscode/

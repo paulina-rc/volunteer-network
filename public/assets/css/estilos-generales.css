@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-primario: #0F4C5C;   /* verde petróleo */
+  --color-acento: #F26B4A;     /* coral cálido */
+  --color-impacto: #E9A227;    /* mostaza suave */
+  --color-naturaleza: #A8C9A1; /* verde salvia */
+  --color-fondo: #F8F7F4;      /* blanco crema */
+  --color-texto: #343434;      /* gris oscuro */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  line-height: 1.6;
+}
+
+a { color: var(--color-primario); text-decoration: none; }
+a:hover { color: var(--color-acento); }
+
+.logo-enlaza {
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-primario);
+}
+
+.btn {
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1.5px solid var(--color-primario);
+}
+.btn--primario {
+  background: var(--color-acento);
+  color: #fff;
+  border-color: var(--color-acento);
+}
+.btn--secundario {
+  background: transparent;
+  color: var(--color-primario);
+}
+
+.contenedor-pendiente {
+  max-width: 480px;
+  margin: 90px auto;
+  padding: 40px;
+  background: #fff;
+  border: 1px solid #EFECE3;
+  border-radius: 18px;
+  text-align: center;
+}
+.contenedor-pendiente h1 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--color-primario);
+  font-size: 22px;
+}
+.paso-plan {
+  font-size: 13px;
+  color: #8a8a85;
+  margin-bottom: 24px;
+}
+
+.banner-estado {
+  max-width: 640px;
+  margin: 0 auto 32px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: var(--color-naturaleza);
+  color: #0B3945;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.grid-categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.tarjeta-categoria {
+  background: #fff;
+  border: 1px solid #EFECE3;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+}
+.tarjeta-categoria .icono {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px; color: #fff; font-weight: 700; font-size: 13px;
+}
