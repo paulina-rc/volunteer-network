@@ -1,7 +1,7 @@
 <?php
 /**
- * Configuración general de Enlaza.
- * Ajustar estos valores según el entorno local (XAMPP/Laragon) o el hosting.
+ * General configuration for Enlaza.
+ * Adjust these values for the local environment (XAMPP/Laragon) or hosting.
  */
 
 define('DB_HOST', 'localhost');
@@ -12,11 +12,11 @@ define('DB_CHARSET', 'utf8mb4');
 
 define('BASE_URL', '/enlaza/public/');
 
-define('MAX_CUPOS_DEFAULT', 20);
+define('MAX_SLOTS_DEFAULT', 20);
 
-// Roles válidos del sistema (RN01)
-define('ROL_VOLUNTARIO', 'voluntario');
-define('ROL_ORGANIZACION', 'organizacion');
+// Valid system roles (RN01)
+define('ROLE_VOLUNTEER', 'volunteer');
+define('ROLE_ORGANIZATION', 'organization');
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --color-primario: #0F4C5C;   /* verde petróleo */
-  --color-acento: #F26B4A;     /* coral cálido */
-  --color-impacto: #E9A227;    /* mostaza suave */
-  --color-naturaleza: #A8C9A1; /* verde salvia */
-  --color-fondo: #F8F7F4;      /* blanco crema */
-  --color-texto: #343434;      /* gris oscuro */
+  --color-primary: #0F4C5C;    /* petrol green */
+  --color-accent: #F26B4A;     /* warm coral */
+  --color-impact: #E9A227;     /* soft mustard */
+  --color-nature: #A8C9A1;     /* sage green */
+  --color-background: #F8F7F4; /* cream white */
+  --color-text: #343434;       /* dark gray */
 }
 
 * { box-sizing: border-box; }
@@ -14,19 +14,19 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  color: var(--color-texto);
-  background: var(--color-fondo);
+  color: var(--color-text);
+  background: var(--color-background);
   line-height: 1.6;
 }
 
-a { color: var(--color-primario); text-decoration: none; }
-a:hover { color: var(--color-acento); }
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { color: var(--color-accent); }
 
 .logo-enlaza {
   font-family: 'Comfortaa', sans-serif;
   font-weight: 700;
   font-size: 22px;
-  color: var(--color-primario);
+  color: var(--color-primary);
 }
 
 .btn {
@@ -36,19 +36,19 @@ a:hover { color: var(--color-acento); }
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  border: 1.5px solid var(--color-primario);
+  border: 1.5px solid var(--color-primary);
 }
-.btn--primario {
-  background: var(--color-acento);
+.btn--primary {
+  background: var(--color-accent);
   color: #fff;
-  border-color: var(--color-acento);
+  border-color: var(--color-accent);
 }
-.btn--secundario {
+.btn--secondary {
   background: transparent;
-  color: var(--color-primario);
+  color: var(--color-primary);
 }
 
-.contenedor-pendiente {
+.pending-container {
   max-width: 480px;
   margin: 90px auto;
   padding: 40px;
@@ -57,59 +57,59 @@ a:hover { color: var(--color-acento); }
   border-radius: 18px;
   text-align: center;
 }
-.contenedor-pendiente h1 {
+.pending-container h1 {
   font-family: 'Poppins', sans-serif;
-  color: var(--color-primario);
+  color: var(--color-primary);
   font-size: 22px;
 }
-.paso-plan {
+.plan-step {
   font-size: 13px;
   color: #8a8a85;
   margin-bottom: 24px;
 }
 
-.banner-estado {
+.status-banner {
   max-width: 640px;
   margin: 0 auto 32px;
   padding: 14px 20px;
   border-radius: 12px;
-  background: var(--color-naturaleza);
+  background: var(--color-nature);
   color: #0B3945;
   font-size: 14px;
   font-weight: 600;
   text-align: center;
 }
 
-.grid-categorias {
+.categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 16px;
   max-width: 900px;
   margin: 0 auto;
 }
-.tarjeta-categoria {
+.category-card {
   background: #fff;
   border: 1px solid #EFECE3;
   border-radius: 14px;
   padding: 18px;
   text-align: center;
 }
-.tarjeta-categoria .icono {
+.category-card .icon {
   width: 44px; height: 44px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 10px; color: #fff; font-weight: 700; font-size: 13px;
 }
 
-/* ==== Registro / Iniciar sesión ==== */
-.btn--ancho { width: 100%; text-align: center; border: none; }
+/* ==== Register / Login ==== */
+.btn--full-width { width: 100%; text-align: center; border: none; }
 
-.contenedor-auth {
+.auth-container {
   max-width: 440px;
   margin: 64px auto 80px;
   padding: 0 20px;
 }
 
-.card-auth {
+.auth-card {
   background: #fff;
   border: 1px solid #EFECE3;
   border-radius: 18px;
@@ -123,7 +123,7 @@ a:hover { color: var(--color-acento); }
   margin: 0 -28px 24px;
   padding: 0 28px;
 }
-.tabs__boton {
+.tabs__button {
   flex: 1;
   background: none;
   border: none;
@@ -135,19 +135,19 @@ a:hover { color: var(--color-acento); }
   cursor: pointer;
   border-bottom: 2.5px solid transparent;
 }
-.tabs__boton--activo {
-  color: var(--color-primario);
-  border-bottom-color: var(--color-acento);
+.tabs__button--active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-accent);
 }
 .tabs__panel { display: none; }
-.tabs__panel--activo { display: block; }
+.tabs__panel--active { display: block; }
 
-.selector-rol {
+.role-selector {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
-.selector-rol__opcion {
+.role-selector__option {
   flex: 1;
   position: relative;
   display: flex;
@@ -159,44 +159,44 @@ a:hover { color: var(--color-acento); }
   border-radius: 12px;
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--color-texto);
+  color: var(--color-text);
   cursor: pointer;
 }
-.selector-rol__opcion input {
+.role-selector__option input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
-.selector-rol__opcion:has(input:checked) {
-  border-color: var(--color-acento);
+.role-selector__option:has(input:checked) {
+  border-color: var(--color-accent);
   background: #FDEEE8;
-  color: var(--color-acento);
+  color: var(--color-accent);
 }
 
-.form-grupo { margin-bottom: 16px; }
-.form-grupo.oculto { display: none; }
-.form-grupo label {
+.form-group { margin-bottom: 16px; }
+.form-group.hidden { display: none; }
+.form-group label {
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-primario);
+  color: var(--color-primary);
   margin-bottom: 6px;
 }
-.form-grupo input {
+.form-group input {
   width: 100%;
   padding: 11px 14px;
   border: 1.5px solid #EFECE3;
   border-radius: 10px;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  color: var(--color-texto);
+  color: var(--color-text);
 }
-.form-grupo input:focus {
+.form-group input:focus {
   outline: none;
-  border-color: var(--color-primario);
+  border-color: var(--color-primary);
 }
 
-.lista-errores {
+.error-list {
   list-style: none;
   margin: 0 0 18px;
   padding: 12px 16px;
@@ -206,12 +206,12 @@ a:hover { color: var(--color-acento); }
   color: #A13B22;
   font-size: 13px;
 }
-.lista-errores li + li { margin-top: 4px; }
+.error-list li + li { margin-top: 4px; }
 
-.mensaje-exito {
+.success-message {
   margin: 0 0 18px;
   padding: 12px 16px;
-  background: var(--color-naturaleza);
+  background: var(--color-nature);
   border-radius: 10px;
   color: #0B3945;
   font-size: 13px;

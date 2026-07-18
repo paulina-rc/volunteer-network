@@ -1,164 +1,166 @@
-# Enlaza — Contexto del Proyecto
+# Enlaza — Project Context
 
-> Archivo de contexto para Claude Code (raíz del repo) y para el Claude Project. Todo Claude que abra este archivo debería quedar listo para trabajar en Enlaza sin más explicaciones.
+> Context file for Claude Code (repo root) and for the Claude Project. Any Claude session that opens this file should be ready to work on Enlaza without further explanation.
 
 ---
 
-## 1. Qué es Enlaza
+## 1. What is Enlaza
 
-Plataforma web que conecta **voluntarios** con **organizaciones sin fines de lucro** que necesitan apoyo. Proyecto TIC del Benemérito Colegio Agropecuario de San Carlos, equipo de 4 estudiantes.
+A web platform that connects **volunteers** with **non-profit organizations** that need support. TIC (ICT) project of the Benemérito Colegio Agropecuario de San Carlos, a team of 4 students.
 
 Slogan: *"La tecnología al servicio de la comunidad."*
-Frase de marca: *"Conecta. Participa. Transforma."*
-Cierre: *"Juntos generamos cambios que importan."*
+Brand phrase: *"Conecta. Participa. Transforma."*
+Closing line: *"Juntos generamos cambios que importan."*
 
-Roles del sistema: **Voluntario** y **Organización** (una cuenta = un solo rol).
+> These three lines are Enlaza's brand copy and are kept in Spanish on purpose — they are user-facing marketing text, not code.
 
----
-
-## 2. Stack técnico (fijo)
-
-- **Backend:** PHP nativo (sin framework), acceso a datos con **PDO**
-- **Base de datos:** MySQL / MariaDB
-- **Frontend:** HTML5 + CSS3 + JavaScript vanilla (sin Bootstrap ni librerías genéricas)
-- **Autenticación:** sesiones PHP (`$_SESSION`) + `password_hash()` / `password_verify()`
-- **Entorno local:** XAMPP / Laragon
-- **Control de versiones:** Git + GitHub
-
-No introducir frameworks ni librerías adicionales sin discutirlo primero.
+System roles: **Volunteer** and **Organization** (one account = one role only).
 
 ---
 
-## 3. Estructura de carpetas
+## 2. Technical stack (fixed)
+
+- **Backend:** native PHP (no framework), data access with **PDO**
+- **Database:** MySQL / MariaDB
+- **Frontend:** HTML5 + CSS3 + vanilla JavaScript (no Bootstrap or generic libraries)
+- **Authentication:** PHP sessions (`$_SESSION`) + `password_hash()` / `password_verify()`
+- **Local environment:** XAMPP / Laragon
+- **Version control:** Git + GitHub
+
+Do not introduce additional frameworks or libraries without discussing it first.
+
+---
+
+## 3. Folder structure
 
 ```
-/public              → index.php (entrada), /assets (css, js, img)
+/public              → index.php (entry point), /assets (css, js, img)
 /app
-  /controllers       → una clase por módulo
-  /models            → una clase por entidad, PDO
-  /views             → plantillas .php de cada pantalla
-  /helpers           → funciones utilitarias compartidas
-/config              → conexión a BD, constantes globales
-/database            → schema.sql, seeds.sql, migraciones si aplica
+  /controllers       → one class per module
+  /models            → one class per entity, PDO
+  /views             → .php templates for each screen
+  /helpers           → shared utility functions
+/config              → database connection, global constants
+/database            → schema.sql, seeds.sql, migrations if applicable
 ```
 
-Esta estructura ya está creada en el repo (ver sección 7).
+This structure is already in place in the repo (see section 7).
 
 ---
 
-## 4. Identidad visual (oficial)
+## 4. Visual identity (official)
 
-**Paleta:**
+**Palette:**
 
-| Color | Hex | Uso |
+| Color | Hex | Use |
 |---|---|---|
-| Verde petróleo | `#0F4C5C` | Primario — confianza, comunidad, estabilidad |
-| Coral cálido | `#F26B4A` | Acento de acción — botones principales, links activos |
-| Mostaza suave | `#E9A227` | Impacto — badges, destacados, alertas positivas |
-| Verde salvia | `#A8C9A1` | Naturaleza — fondos suaves, ilustraciones |
-| Blanco crema | `#F8F7F4` | Fondo principal |
-| Gris oscuro | `#343434` | Texto principal |
+| Petrol green | `#0F4C5C` | Primary — trust, community, stability |
+| Warm coral | `#F26B4A` | Action accent — primary buttons, active links |
+| Soft mustard | `#E9A227` | Impact — badges, highlights, positive alerts |
+| Sage green | `#A8C9A1` | Nature — soft backgrounds, illustrations |
+| Cream white | `#F8F7F4` | Main background |
+| Dark gray | `#343434` | Main text |
 
-**Tipografías:**
-- **Comfortaa** — títulos principales y logo (Light, Regular, Medium, SemiBold, Bold)
-- **Poppins** — cuerpo, UI, textos web (Light, Regular, Medium, SemiBold, Bold)
+**Typography:**
+- **Comfortaa** — main headings and logo (Light, Regular, Medium, SemiBold, Bold)
+- **Poppins** — body copy, UI, web text (Light, Regular, Medium, SemiBold, Bold)
 
-Ambas se cargan desde Google Fonts.
+Both are loaded from Google Fonts.
 
-**Iconografía:** símbolos de comunidad, solidaridad, naturaleza, impacto, tecnología, inclusión. Se usa Font Awesome como librería de íconos.
+**Iconography:** symbols of community, solidarity, nature, impact, technology, inclusion. Font Awesome is used as the icon library.
 
 ---
 
-## 5. Nomenclatura (importante — mantener consistente)
+## 5. Naming conventions (important — keep consistent)
 
-### Base de datos
-- **Tablas:** `snake_case` plural en español → `usuarios`, `voluntarios`, `organizaciones`, `oportunidades`, `inscripciones`, `habilidades`, `categorias`
-- **Columnas:** `snake_case` → `id`, `correo`, `contrasena_hash`, `fecha_creacion`, `esta_activo`
-- **Clave primaria:** `id` (auto-increment)
-- **Claves foráneas:** `id_<tabla_singular>` → `id_usuario`, `id_oportunidad`
-- **Booleanos:** prefijo `es_` o `esta_` → `es_activo`, `esta_verificado`, `perfil_completo` (excepción ya en uso, ver `organizaciones`)
-- **Fechas:** `fecha_<algo>` → `fecha_creacion`, `fecha_limite`
+> **Naming convention change:** as of the English naming migration, all code and technical documentation — database, PHP classes/methods/variables, file names, code comments, this file, route names, CSS classes — moved from Spanish to English. The **one exception is the visible content inside `.php` views** (labels, buttons, titles, error/success messages): that text stays in **Spanish**, because it's the language the end user (volunteer or organization) actually sees. Commit messages were already in English before this change and are unaffected.
+
+### Database
+- **Tables:** `snake_case` plural in English → `users`, `volunteers`, `organizations`, `opportunities`, `enrollments`, `skills`, `categories`
+- **Columns:** `snake_case` in English → `id`, `email`, `password_hash`, `created_at`, `is_active`
+- **Primary key:** `id` (auto-increment)
+- **Foreign keys:** `<singular_table>_id` → `user_id`, `opportunity_id`
+- **Booleans:** `is_` prefix → `is_active`, `is_verified`, `profile_complete` (exception already in use, see `organizations`)
+- **Dates:** `<something>_at` / `<something>_date` → `created_at`, `activity_date`, `enrollment_date`
 
 ### PHP
-- **Clases:** `PascalCase` en español → `UsuarioController`, `OportunidadModel`
-- **Archivos con clase:** mismo nombre que la clase → `UsuarioController.php`
-- **Métodos:** `camelCase` → `crearUsuario()`, `buscarPorCorreo()`
-- **Variables:** `camelCase` → `$usuarioActual`, `$listaOportunidades`
-- **Constantes:** `UPPER_SNAKE_CASE` → `MAX_CUPOS_DEFAULT`, `DB_HOST`
-- **Vistas:** `snake_case` en español → `perfil_voluntario.php`, `lista_oportunidades.php`
+- **Classes:** `PascalCase` in English → `UserController`, `OpportunityModel`
+- **Files with a class:** same name as the class → `UserController.php`
+- **Methods:** `camelCase` in English → `createUser()`, `findByEmail()`
+- **Variables:** `camelCase` in English → `$currentUser`, `$opportunityList`
+- **Constants:** `UPPER_SNAKE_CASE` → `MAX_SLOTS_DEFAULT`, `DB_HOST`
+- **Views:** `snake_case` in English for the **file name** → `volunteer_profile.php`, `opportunity_list.php`. The **visible HTML content** inside each view (labels, buttons, titles, error/success messages) stays in **Spanish**.
 
 ### Frontend
-- **Clases CSS:** `kebab-case` con prefijo por bloque (BEM ligero) → `.btn`, `.btn--primario`, `.card`, `.card__title`
-- **IDs:** `kebab-case` → `#form-registro`
-- **Archivos CSS/JS:** `kebab-case` → `estilos-generales.css`, `validacion-formularios.js`
+- **CSS classes:** `kebab-case` in English with a block prefix (light BEM) → `.btn`, `.btn--primary`, `.card`, `.card__title`
+- **IDs:** `kebab-case` in English → `#register-form`
+- **CSS/JS files:** `kebab-case` in English → `general-styles.css`, `form-validation.js`
 
 ### Git
-- **Rama principal:** `master`
-- **Ramas de trabajo:** `feature/nombre-corto`, `fix/nombre-corto`
-- **Commits (en inglés):** imperative verb + qué → `add volunteer registration`, `fix quota validation`, `update data model`
+- **Main branch:** `master`
+- **Working branches:** `feature/short-name`, `fix/short-name`
+- **Commits (in English):** imperative verb + what → `add volunteer registration`, `fix quota validation`, `update data model`
 
-> Cambio de convención: los commits pasaron de español a **inglés** a partir del commit base del proyecto. El resto de la documentación, comentarios de código, nombres de variables, vistas, etc. se mantienen en **español**.
-
-### URLs internas
-- `snake_case` en parámetros → `?accion=publicar_oportunidad`
-- Nombres de páginas en `snake_case`
+### Internal URLs
+- `snake_case` in English for parameters → `?action=publish_opportunity`
+- Action/page names in `snake_case` English
 
 ---
 
-## 6. Reglas de negocio clave
+## 6. Key business rules
 
-Ver **Enlaza_Documentacion_Completa.docx** (sección 4) para el detalle completo. Resumen:
+See **Enlaza_Documentacion_Completa.docx** (section 4) for the full detail. Summary:
 
-- **RN01** — Una cuenta es Voluntario **o** Organización, nunca ambos.
-- **RN02** — Una organización debe completar su perfil antes de publicar oportunidades.
-- **RN03** — Toda oportunidad requiere título, descripción, habilidades, ubicación, fecha y cupos.
-- **RN04** — Un voluntario solo se inscribe si hay cupos disponibles y la fecha no ha vencido.
-- **RN05** — Al llenarse los cupos, la oportunidad pasa automáticamente a "Cerrada".
-- **RN06** — Toda inscripción inicia en "Pendiente" hasta que la organización acepta o rechaza.
-- **RN07** — Los datos personales del voluntario solo son visibles para las organizaciones a las que se inscribió.
-- **RN08** — El sistema de recomendación prioriza: habilidades > intereses > ubicación.
-- **RN09** — Una organización puede editar o cerrar manualmente una oportunidad antes de su fecha límite.
+- **RN01** — An account is Volunteer **or** Organization, never both.
+- **RN02** — An organization must complete its profile before publishing opportunities.
+- **RN03** — Every opportunity requires a title, description, skills, location, date, and slots.
+- **RN04** — A volunteer can only enroll if slots are available and the date hasn't passed.
+- **RN05** — Once all slots are filled, the opportunity automatically moves to "Closed".
+- **RN06** — Every enrollment starts as "Pending" until the organization accepts or rejects it.
+- **RN07** — A volunteer's personal data is only visible to organizations they enrolled with.
+- **RN08** — The recommendation system prioritizes: skills > interests > location.
+- **RN09** — An organization can edit or manually close an opportunity before its deadline.
 
 ---
 
-## 7. Estado del proyecto
+## 7. Project status
 
-| Área | Estado |
+| Area | Status |
 |---|---|
-| Documentación técnica completa (requisitos, reglas, historias, casos de uso, arquitectura, modelo de datos) | ✅ Terminada — ver `Enlaza_Documentacion_Completa.docx` |
-| Diseño visual y prototipo navegable | ✅ Terminado — archivos `*.dc.html` (Claude Design) |
-| Desarrollo (Claude Code) | ⏳ En progreso — ver Plan de desarrollo, sección 8 |
+| Complete technical documentation (requirements, rules, user stories, use cases, architecture, data model) | ✅ Done — see `Enlaza_Documentacion_Completa.docx` |
+| Visual design and navigable prototype | ✅ Done — `*.dc.html` files (Claude Design) |
+| Development (Claude Code) | ⏳ In progress — see Development plan, section 8 |
 
-No se trabaja más por "Sprints" formales de documentación/diseño — ya están cerrados. El desarrollo del código sí avanza por pasos (sección 8), pero de forma continua, sin fases rígidas de espera.
+We no longer work in formal documentation/design "Sprints" — those are closed. Code development does move forward in steps (section 8), but continuously, without rigid waiting phases.
 
 ---
 
-## 8. Plan de desarrollo (Claude Code)
+## 8. Development plan (Claude Code)
 
-| Paso | Contenido | Estado |
+| Step | Content | Status |
 |---|---|---|
-| **1** | Base del proyecto: estructura de carpetas, conexión a BD, esquema SQL (usuarios, voluntarios, organizaciones, categorias, habilidades, oportunidades, inscripciones + tablas puente), router | ✅ Terminado |
-| **2** | Registro y login (ambos roles), sesiones, validación de formularios | ✅ Terminado |
-| **3** | Perfil de voluntario y perfil de organización (crear/editar) | Pendiente |
-| **4** | Publicar / editar / cerrar oportunidades (organización) | Pendiente |
-| **5** | Búsqueda y filtrado de oportunidades (voluntario) | Pendiente |
-| **6** | Inscripción a oportunidades + gestión (aceptar/rechazar) | Pendiente |
-| **7** | Sistema de recomendación básico (habilidades / intereses / ubicación) | Pendiente |
-| **8** | Pulido visual final, validaciones de seguridad, pruebas | Pendiente |
+| **1** | Project base: folder structure, DB connection, SQL schema (users, volunteers, organizations, categories, skills, opportunities, enrollments + bridge tables), router | ✅ Done |
+| **2** | Registration and login (both roles), sessions, form validation | ✅ Done |
+| **3** | Volunteer profile and organization profile (create/edit) | Pending |
+| **4** | Publish / edit / close opportunities (organization) | Pending |
+| **5** | Search and filtering of opportunities (volunteer) | Pending |
+| **6** | Enrollment in opportunities + management (accept/reject) | Pending |
+| **7** | Basic recommendation system (skills / interests / location) | Pending |
+| **8** | Final visual polish, security validations, testing | Pending |
 
 ---
 
-## 9. Cómo trabajar cada sesión
+## 9. How to work each session
 
-1. Decir explícitamente qué Paso (1–8) se va a trabajar.
-2. Leer este archivo completo antes de tocar código: respeta el stack, la estructura de carpetas y la nomenclatura definidos arriba.
-3. No mezclar varios pasos grandes en la misma sesión — cerrar uno antes de abrir el siguiente.
-4. Al terminar un paso, actualizar la tabla de la sección 8 marcándolo como ✅ Terminado.
-5. Comentarios de código, nombres de variables, vistas y toda la documentación van en **español**. Los **mensajes de commit van en inglés** (ver sección 5, Git).
+1. Explicitly state which Step (1–8) is being worked on.
+2. Read this whole file before touching code: respect the stack, folder structure, and naming conventions defined above.
+3. Don't mix several big steps in the same session — close one before opening the next.
+4. When a step is finished, update the table in section 8, marking it as ✅ Done.
+5. Code comments, variable names, view file names, and all technical documentation are in **English**. Visible view content (labels, buttons, titles, error/success messages) stays in **Spanish**. Commit messages are in **English** (see section 5, Git).
 
 ---
 
-## 10. Documentos y prototipos de referencia
+## 10. Reference documents and prototypes
 
-- `Enlaza_Documentacion_Completa.docx` — requisitos, reglas de negocio, historias de usuario, casos de uso, arquitectura y modelo de datos completos.
-- Archivos `*.dc.html` (Home, Busqueda, DetalleOportunidad, Registro, PerfilVoluntario, PerfilOrganizacion, PublicarOportunidad, GestionInscripciones) — prototipo navegable de referencia visual para maquetar cada pantalla PHP real.
+- `Enlaza_Documentacion_Completa.docx` — full requirements, business rules, user stories, use cases, architecture, and data model.
+- `*.dc.html` files (Home, Busqueda, DetalleOportunidad, Registro, PerfilVoluntario, PerfilOrganizacion, PublicarOportunidad, GestionInscripciones) — navigable visual reference prototype used to lay out each real PHP screen.

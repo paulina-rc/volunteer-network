@@ -1,70 +1,70 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
-require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../config/connection.php';
 
-spl_autoload_register(function ($clase) {
-    $posiblesRutas = [
-        __DIR__ . '/../app/controllers/' . $clase . '.php',
-        __DIR__ . '/../app/models/' . $clase . '.php',
+spl_autoload_register(function ($class) {
+    $possiblePaths = [
+        __DIR__ . '/../app/controllers/' . $class . '.php',
+        __DIR__ . '/../app/models/' . $class . '.php',
     ];
-    foreach ($posiblesRutas as $ruta) {
-        if (file_exists($ruta)) {
-            require_once $ruta;
+    foreach ($possiblePaths as $path) {
+        if (file_exists($path)) {
+            require_once $path;
             return;
         }
     }
 });
 
-// Mapa de rutas: ?accion=... => [Controlador, método]
-// Ver sección 8.2 (Rutas principales) de la documentación técnica.
-$rutas = [
-    'home'                          => ['OportunidadController', 'home'],
+// Route map: ?action=... => [Controller, method]
+// See section 8.2 (Main routes) of the technical documentation.
+$routes = [
+    'home'                          => ['OpportunityController', 'home'],
 
-    'registro'                      => ['UsuarioController', 'mostrarRegistro'],
-    'registrar_usuario'             => ['UsuarioController', 'registrar'],
-    'iniciar_sesion'                => ['UsuarioController', 'iniciarSesion'],
-    'cerrar_sesion'                 => ['UsuarioController', 'cerrarSesion'],
+    'register'                      => ['UserController', 'showRegister'],
+    'register_user'                 => ['UserController', 'register'],
+    'login'                         => ['UserController', 'login'],
+    'logout'                        => ['UserController', 'logout'],
 
-    'ver_perfil_voluntario'         => ['VoluntarioController', 'verPerfil'],
-    'guardar_perfil_voluntario'     => ['VoluntarioController', 'guardarPerfil'],
-    'recomendaciones'               => ['VoluntarioController', 'recomendaciones'],
+    'view_volunteer_profile'        => ['VolunteerController', 'viewProfile'],
+    'save_volunteer_profile'        => ['VolunteerController', 'saveProfile'],
+    'recommendations'               => ['VolunteerController', 'recommendations'],
 
-    'ver_perfil_organizacion'       => ['OrganizacionController', 'verPerfil'],
-    'guardar_perfil_organizacion'   => ['OrganizacionController', 'guardarPerfil'],
+    'view_organization_profile'     => ['OrganizationController', 'viewProfile'],
+    'save_organization_profile'     => ['OrganizationController', 'saveProfile'],
 
-    'buscar_oportunidades'          => ['OportunidadController', 'buscar'],
-    'ver_oportunidad'               => ['OportunidadController', 'ver'],
-    'publicar_oportunidad'          => ['OportunidadController', 'publicar'],
-    'editar_oportunidad'            => ['OportunidadController', 'editar'],
-    'cerrar_oportunidad'            => ['OportunidadController', 'cerrar'],
+    'search_opportunities'          => ['OpportunityController', 'search'],
+    'view_opportunity'              => ['OpportunityController', 'view'],
+    'publish_opportunity'           => ['OpportunityController', 'publish'],
+    'edit_opportunity'              => ['OpportunityController', 'edit'],
+    'close_opportunity'             => ['OpportunityController', 'close'],
 
-    'gestionar_inscripciones'       => ['InscripcionController', 'gestionar'],
-    'inscribirse'                   => ['InscripcionController', 'inscribirse'],
-    'aceptar_inscripcion'           => ['InscripcionController', 'aceptar'],
-    'rechazar_inscripcion'          => ['InscripcionController', 'rechazar'],
+    'manage_enrollments'            => ['EnrollmentController', 'manage'],
+    'enroll'                        => ['EnrollmentController', 'enroll'],
+    'accept_enrollment'             => ['EnrollmentController', 'accept'],
+    'reject_enrollment'             => ['EnrollmentController', 'reject'],
 ];
 
-$accion = $_GET['accion'] ?? 'home';
+$action = $_GET['action'] ?? 'home';
 
-if (!array_key_exists($accion, $rutas)) {
+if (!array_key_exists($action, $routes)) {
     http_response_code(404);
     echo '<h1 style="font-family:sans-serif;color:#0F4C5C">404 — Ruta no encontrada</h1>';
-    echo '<p style="font-family:sans-serif">La acción "' . htmlspecialchars($accion) . '" no existe.</p>';
+    echo '<p style="font-family:sans-serif">La acción "' . htmlspecialchars($action) . '" no existe.</p>';
     exit;
 }
 
-[$nombreControlador, $metodo] = $rutas[$accion];
+[$controllerName, $methodName] = $routes[$action];
 
-if (!class_exists($nombreControlador)) {
+if (!class_exists($controllerName)) {
     http_response_code(500);
-    die('Controlador no encontrado: ' . htmlspecialchars($nombreControlador));
+    die('Controlador no encontrado: ' . htmlspecialchars($controllerName));
 }
 
-$controlador = new $nombreControlador();
+$controller = new $controllerName();
 
-if (!method_exists($controlador, $metodo)) {
+if (!method_exists($controller, $methodName)) {
     http_response_code(500);
-    die('Método no encontrado: ' . htmlspecialchars($nombreControlador) . '::' . htmlspecialchars($metodo));
+    die('Método no encontrado: ' . htmlspecialchars($controllerName) . '::' . htmlspecialchars($methodName));
 }
 
-$controlador->$metodo();
+$controller->$methodName();
