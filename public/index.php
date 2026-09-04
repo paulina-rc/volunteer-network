@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/connection.php';
+require_once __DIR__ . '/../app/helpers/functions.php';
 
 spl_autoload_register(function ($class) {
     $possiblePaths = [
