@@ -235,6 +235,72 @@ function formatDate(?string $date, bool $long = true): string
 }
 
 /**
+ * Splits the requirements column into the lines the detail screen lists.
+ * Blank lines and stray whitespace are dropped, so an empty column yields [].
+ *
+ * @return string[]
+ */
+function requirementLines(?string $requirements): array
+{
+    if ($requirements === null || trim($requirements) === '') {
+        return [];
+    }
+
+    $lines = preg_split('/\r\n|\r|\n/', $requirements);
+
+    return array_values(array_filter(
+        array_map('trim', $lines),
+        static fn (string $line): bool => $line !== ''
+    ));
+}
+
+// ------------------------------------------------------------
+// Business rules shared by views and controllers
+// ------------------------------------------------------------
+
+/**
+ * RN04 — whether an opportunity can still take enrollments.
+ *
+ * The single definition of the rule: it must be open, its date must not have
+ * passed, and it must have at least one free slot. Used by the opportunity
+ * card, the detail screen and EnrollmentController, so the button a volunteer
+ * sees and the check the server makes can never disagree.
+ *
+ * Takes a row as returned by OpportunityModel.
+ */
+function acceptsEnrollments(array $opportunity): bool
+{
+    return ($opportunity['status'] ?? '') === 'active'
+        && ($opportunity['activity_date'] ?? '') >= date('Y-m-d')
+        && (int) ($opportunity['available_slots'] ?? 0) > 0;
+}
+
+/**
+ * Why an opportunity is not taking enrollments, for the message next to a
+ * disabled button. Returns '' when it is in fact open.
+ */
+function enrollmentBlockedReason(array $opportunity): string
+{
+    if (acceptsEnrollments($opportunity)) {
+        return '';
+    }
+
+    if (($opportunity['status'] ?? '') === 'draft') {
+        return 'Esta oportunidad todavía es un borrador.';
+    }
+
+    if (($opportunity['activity_date'] ?? '') < date('Y-m-d')) {
+        return 'La fecha de esta actividad ya pasó.';
+    }
+
+    if ((int) ($opportunity['available_slots'] ?? 0) <= 0) {
+        return 'Esta oportunidad ya no tiene cupos disponibles.';
+    }
+
+    return 'Esta oportunidad está cerrada.';
+}
+
+/**
  * Builds the avatar initials for a person or organization name:
  * "Ana Rodríguez" => "AR", "Fundación Verde Norte" => "FV", "Enlaza" => "EN".
  */

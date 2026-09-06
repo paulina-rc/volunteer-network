@@ -93,6 +93,42 @@ class OpportunityModel
     }
 
     /**
+     * Live counters for the home page banner. Everything is counted at request
+     * time, so the numbers on screen are the contents of the database and not a
+     * hardcoded marketing figure.
+     *
+     * - opportunities — open and upcoming, same rule as countActive()
+     * - organizations — registered organizations
+     * - volunteers    — registered volunteers
+     * - locations     — distinct communities, taking the canton (the part
+     *                   before the comma) so "San Carlos, Alajuela" and
+     *                   "San Carlos" count once
+     *
+     * @return array{opportunities:int,organizations:int,volunteers:int,locations:int}
+     */
+    public function getPlatformStats(): array
+    {
+        $statement = $this->connection->query(
+            "SELECT
+               (SELECT COUNT(*) FROM opportunities
+                 WHERE status = 'active' AND activity_date >= CURDATE()) AS opportunities,
+               (SELECT COUNT(*) FROM organizations) AS organizations,
+               (SELECT COUNT(*) FROM volunteers) AS volunteers,
+               (SELECT COUNT(DISTINCT TRIM(SUBSTRING_INDEX(location, ',', 1)))
+                  FROM opportunities
+                 WHERE location IS NOT NULL AND TRIM(location) <> '') AS locations"
+        );
+        $stats = $statement->fetch();
+
+        return [
+            'opportunities' => (int) ($stats['opportunities'] ?? 0),
+            'organizations' => (int) ($stats['organizations'] ?? 0),
+            'volunteers'    => (int) ($stats['volunteers'] ?? 0),
+            'locations'     => (int) ($stats['locations'] ?? 0),
+        ];
+    }
+
+    /**
      * Opportunity search with optional filters (RF06).
      *
      * Accepted keys:

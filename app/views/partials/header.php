@@ -78,3 +78,20 @@ if ($userChipLabel !== '') {
     <?php endif; ?>
   </div>
 </header>
+
+<?php
+// Flash messages queued by flash() on the previous request. Reading them here
+// empties the queue, so a message is shown exactly once.
+$flashMessages = getFlash();
+?>
+<?php if ($flashMessages !== []): ?>
+  <div class="container" style="padding-top:16px">
+    <?php foreach ($flashMessages as $flashMessage): ?>
+      <?php if ($flashMessage['type'] === 'success'): ?>
+        <p class="success-message"><?= e($flashMessage['text']) ?></p>
+      <?php else: ?>
+        <ul class="error-list"><li><?= e($flashMessage['text']) ?></li></ul>
+      <?php endif; ?>
+    <?php endforeach; ?>
+  </div>
+<?php endif; ?>

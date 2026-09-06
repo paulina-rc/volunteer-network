@@ -18,7 +18,7 @@ $heroSlides = [
     ],
     [
         'icon' => 'fa-users',
-        'eyebrow' => '+45 organizaciones aliadas',
+        'eyebrow' => $platformStats['organizations'] . ' organizaciones aliadas',
         'title' => 'Organizaciones que ya están generando cambios reales',
         'text' => 'Publicá tus oportunidades, gestioná inscripciones y encontrá voluntarios afines a tu causa en un solo lugar.',
         'cta1' => 'Publicar oportunidad',
@@ -44,13 +44,8 @@ $heroSlides = [
     ],
 ];
 
-// TODO (Paso 4/5 del plan de desarrollo): reemplazar por oportunidades reales
-// desde OpportunityModel (más recientes / destacadas) en vez de este arreglo de ejemplo.
-$featuredOpportunities = [
-    ['tag' => 'Ambiental', 'title' => 'Jornada de reforestación río San Carlos', 'org' => 'Fundación Verde Norte', 'date' => '24 ago 2026', 'location' => 'San Carlos', 'slots' => '8', 'photoAlt' => 'foto: voluntarios sembrando árboles junto al río, botas y guantes de trabajo'],
-    ['tag' => 'Educativo', 'title' => 'Tutorías de matemáticas para primaria', 'org' => 'Asociación Aprender Juntos', 'date' => '2 sept 2026', 'location' => 'Ciudad Quesada', 'slots' => '3', 'photoAlt' => 'foto: tutora y estudiante revisando un cuaderno de matemáticas en un aula'],
-    ['tag' => 'Salud', 'title' => 'Feria de salud comunitaria', 'org' => 'Cruz Roja — sede local', 'date' => '14 sept 2026', 'location' => 'Florencia', 'slots' => '12', 'photoAlt' => 'foto: fila de vecinos siendo atendidos en carpa de feria de salud'],
-];
+// $featuredOpportunities, $categories (with opportunity_count) and $platformStats
+// all come from OpportunityController::home(), straight out of the database.
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -95,22 +90,23 @@ $featuredOpportunities = [
     </div>
 </section>
 
-<div class="search-card">
+<form class="search-card" method="get" action="<?= BASE_URL ?>index.php">
+    <input type="hidden" name="action" value="search_opportunities">
     <div class="search-card__field">
         <label class="search-card__label" for="home-search-query">¿Qué buscás?</label>
         <div class="search-card__input-wrap">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="home-search-query" placeholder="Ej. reforestación, tutorías, feria de salud...">
+            <input type="text" id="home-search-query" name="text" placeholder="Ej. reforestación, tutorías, feria de salud...">
         </div>
     </div>
     <div class="search-card__field">
         <label class="search-card__label" for="home-search-category">Categoría</label>
         <div class="search-card__input-wrap">
             <i class="fa-solid fa-layer-group"></i>
-            <select id="home-search-category">
-                <option>Todas las categorías</option>
+            <select id="home-search-category" name="categories[]">
+                <option value="">Todas las categorías</option>
                 <?php foreach ($categories as $category): ?>
-                    <option><?= htmlspecialchars($category['name']) ?></option>
+                    <option value="<?= (int) $category['id'] ?>"><?= e($category['name']) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -119,20 +115,20 @@ $featuredOpportunities = [
         <label class="search-card__label" for="home-search-location">Ubicación</label>
         <div class="search-card__input-wrap">
             <i class="fa-solid fa-location-dot"></i>
-            <input type="text" id="home-search-location" placeholder="San Carlos, Alajuela...">
+            <input type="text" id="home-search-location" name="location" placeholder="San Carlos, Alajuela...">
         </div>
     </div>
-    <a href="<?= BASE_URL ?>?action=search_opportunities" class="btn btn--primary search-card__submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</a>
-</div>
+    <button type="submit" class="btn btn--primary search-card__submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+</form>
 
 <section class="stats-banner">
     <div class="container stats-banner__grid">
-        <div><div class="stats-banner__number">120+</div><div class="stats-banner__label">Oportunidades activas</div></div>
-        <div><div class="stats-banner__number">45+</div><div class="stats-banner__label">Organizaciones aliadas</div></div>
-        <div><div class="stats-banner__number">800+</div><div class="stats-banner__label">Voluntarios conectados</div></div>
-        <div><div class="stats-banner__number">12</div><div class="stats-banner__label">Comunidades impactadas</div></div>
+        <div><div class="stats-banner__number"><?= (int) $platformStats['opportunities'] ?></div><div class="stats-banner__label">Oportunidades activas</div></div>
+        <div><div class="stats-banner__number"><?= (int) $platformStats['organizations'] ?></div><div class="stats-banner__label">Organizaciones aliadas</div></div>
+        <div><div class="stats-banner__number"><?= (int) $platformStats['volunteers'] ?></div><div class="stats-banner__label">Voluntarios conectados</div></div>
+        <div><div class="stats-banner__number"><?= (int) $platformStats['locations'] ?></div><div class="stats-banner__label">Comunidades impactadas</div></div>
     </div>
-    <p class="stats-banner__note">Cifras ilustrativas para este prototipo.</p>
+    <p class="stats-banner__note">Datos tomados de la base de datos del sistema.</p>
 </section>
 
 <section id="categorias" class="page-section">
@@ -144,11 +140,15 @@ $featuredOpportunities = [
         </div>
         <div class="grid-5">
             <?php foreach ($categories as $category): ?>
-                <a href="<?= BASE_URL ?>?action=search_opportunities" class="category-card">
-                    <div class="icon" style="background:<?= htmlspecialchars($category['color_hex']) ?>;color:<?= contrastColor($category['color_hex']) ?>">
-                        <i class="fa-solid <?= htmlspecialchars($category['icon']) ?>"></i>
+                <a href="<?= e(actionUrl('search_opportunities', ['categories' => [(int) $category['id']]])) ?>" class="category-card">
+                    <div class="icon" style="background:<?= e($category['color_hex']) ?>;color:<?= contrastColor($category['color_hex']) ?>">
+                        <i class="fa-solid <?= e($category['icon']) ?>"></i>
                     </div>
-                    <h3 class="category-card__title"><?= htmlspecialchars($category['name']) ?></h3>
+                    <h3 class="category-card__title"><?= e($category['name']) ?></h3>
+                    <p class="category-card__desc">
+                        <?php $count = (int) $category['opportunity_count']; ?>
+                        <?= $count === 1 ? '1 oportunidad activa' : $count . ' oportunidades activas' ?>
+                    </p>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -162,26 +162,18 @@ $featuredOpportunities = [
             <h2 class="section-intro__title">Oportunidades destacadas</h2>
             <p class="section-intro__text">Una muestra de lo que las organizaciones están publicando esta semana.</p>
         </div>
-        <div class="grid-3">
-            <?php foreach ($featuredOpportunities as $opportunity): ?>
-                <div class="opportunity-card">
-                    <div class="opportunity-card__photo">
-                        <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="<?= htmlspecialchars($opportunity['photoAlt']) ?>">
-                        <span class="opportunity-card__badge" style="background:#E9A227;color:#4a3106"><?= htmlspecialchars($opportunity['slots']) ?> cupos</span>
-                        <span class="opportunity-card__tag"><?= htmlspecialchars($opportunity['tag']) ?></span>
-                    </div>
-                    <div class="opportunity-card__body">
-                        <h3 class="opportunity-card__title"><?= htmlspecialchars($opportunity['title']) ?></h3>
-                        <div class="opportunity-card__org"><?= htmlspecialchars($opportunity['org']) ?></div>
-                        <div class="opportunity-card__meta">
-                            <span class="opportunity-card__meta-item"><i class="fa-regular fa-calendar"></i> <?= htmlspecialchars($opportunity['date']) ?></span>
-                            <span class="opportunity-card__meta-item"><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars($opportunity['location']) ?></span>
-                        </div>
-                        <a href="<?= BASE_URL ?>?action=view_opportunity" class="btn btn--secondary btn--full-width">Ver detalle</a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <?php if ($featuredOpportunities === []): ?>
+            <div class="empty-state">
+                <i class="fa-regular fa-calendar"></i>
+                <p>Todavía no hay oportunidades publicadas. Volvé pronto.</p>
+            </div>
+        <?php else: ?>
+            <div class="grid-3">
+                <?php foreach ($featuredOpportunities as $cardOpportunity): ?>
+                    <?php $cardCompact = false; require __DIR__ . '/partials/opportunity_card.php'; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         <div style="text-align:center;margin-top:36px">
             <a href="<?= BASE_URL ?>?action=search_opportunities" class="btn btn--primary">Ver todas las oportunidades <i class="fa-solid fa-arrow-right"></i></a>
         </div>
