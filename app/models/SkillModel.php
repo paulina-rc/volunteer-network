@@ -9,7 +9,13 @@ class SkillModel
         $this->connection = getConnection();
     }
 
-    // Step 3 of the development plan:
-    // - getAll(): array
-    // - createIfNotExists(string $name): int
+    /**
+     * The full skills catalog, for the profile and publish forms.
+     */
+    public function getAll(): array
+    {
+        $statement = $this->connection->query('SELECT * FROM skills ORDER BY name');
+
+        return $statement->fetchAll();
+    }
 }
