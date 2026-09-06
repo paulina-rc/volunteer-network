@@ -93,25 +93,38 @@ if (!empty($opportunity['founded_year'])) {
             </div>
             <p style="font-size:12px;color:#6d6d68;margin:0 0 14px"><?= $takenSlots ?> de <?= $totalSlots ?> cupos ya ocupados</p>
 
-            <?php if ($isOpen): ?>
-                <!-- TODO (Paso 6 del plan de desarrollo, RF07, RN04): conectar este botón a
-                     ?action=enroll (EnrollmentController::enroll) en vez de un toggle visual local. -->
-                <button type="button" class="btn btn--primary btn--full-width" style="margin-bottom:12px" data-enroll-button>Inscribirme a esta oportunidad</button>
-                <button type="button" class="btn btn--secondary btn--full-width">Guardar para después</button>
-            <?php else: ?>
+            <?php if ($currentEnrollment !== null): ?>
+                <!-- Already enrolled: show the real state instead of a button (RF11). -->
+                <div class="enrollment-panel__success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h3>Ya estás inscrita</h3>
+                    <p>Estado de tu inscripción: <strong><?= e(statusLabel($currentEnrollment['status'])) ?></strong>.
+                        <?php if ($currentEnrollment['status'] === 'pending'): ?>
+                            La organización todavía la está revisando.
+                        <?php endif; ?>
+                    </p>
+                    <a href="<?= e(actionUrl('view_volunteer_profile')) ?>" class="btn btn--secondary btn--full-width">Ver mis inscripciones</a>
+                </div>
+            <?php elseif (!$isOpen): ?>
                 <button type="button" class="btn btn--primary btn--full-width" style="margin-bottom:12px" disabled>Inscripciones cerradas</button>
                 <p style="font-size:13px;color:#8a8a85;text-align:center;margin:0"><?= e($blockedReason) ?></p>
+            <?php elseif (isOrganization()): ?>
+                <button type="button" class="btn btn--primary btn--full-width" style="margin-bottom:12px" disabled>Inscribirme a esta oportunidad</button>
+                <p style="font-size:13px;color:#8a8a85;text-align:center;margin:0">Estás usando una cuenta de organización (RN01).</p>
+            <?php elseif (isVolunteer()): ?>
+                <form method="post" action="<?= e(actionUrl('enroll')) ?>">
+                    <?= csrfField() ?>
+                    <input type="hidden" name="opportunity_id" value="<?= (int) $opportunity['id'] ?>">
+                    <button type="submit" class="btn btn--primary btn--full-width" style="margin-bottom:12px" data-enroll-button>Inscribirme a esta oportunidad</button>
+                </form>
+                <button type="button" class="btn btn--secondary btn--full-width">Guardar para después</button>
+            <?php else: ?>
+                <a href="<?= e(actionUrl('register', ['tab' => 'login'])) ?>" class="btn btn--primary btn--full-width" style="margin-bottom:12px">Iniciar sesión para inscribirme</a>
+                <p style="font-size:13px;color:#8a8a85;text-align:center;margin:0">Necesitás una cuenta de voluntario para inscribirte.</p>
             <?php endif; ?>
-        </div>
-        <div class="enrollment-panel__success" data-enrollment-success style="display:none">
-            <i class="fa-solid fa-circle-check"></i>
-            <h3>¡Listo, quedaste inscrito!</h3>
-            <p>La organización revisará tu inscripción y te avisará por correo.</p>
-            <a href="<?= e(actionUrl('view_volunteer_profile')) ?>" class="btn btn--secondary btn--full-width">Ver mis inscripciones</a>
         </div>
     </div>
 </section>
 
-<script src="<?= BASE_URL ?>assets/js/opportunity-detail.js"></script>
 </body>
 </html>

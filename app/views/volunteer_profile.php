@@ -3,25 +3,26 @@ $volunteerName = 'Ana Rodríguez';
 $volunteerLocation = 'Ciudad Quesada, San Carlos';
 $aboutMe = 'Estudiante de bachillerato en el Colegio Agropecuario de San Carlos, me interesa el trabajo ambiental y comunitario.';
 
+// RF11 — the volunteer's own enrollments, with the state each one really has.
+$enrollments = [];
+
 if (($_SESSION['role'] ?? null) === ROLE_VOLUNTEER) {
     $volunteer = (new VolunteerModel())->findByUserId((int) $_SESSION['user_id']);
     if ($volunteer !== null) {
         $volunteerName = $volunteer['full_name'];
         $volunteerLocation = $volunteer['location'] ?: 'Ubicación no indicada aún';
         $aboutMe = $volunteer['about_me'] ?: $aboutMe;
+        $enrollments = (new EnrollmentModel())->getByVolunteer((int) $volunteer['id']);
     }
 }
 
-$nameParts = preg_split('/\s+/', trim($volunteerName));
-$volunteerInitials = strtoupper(mb_substr($nameParts[0], 0, 1) . mb_substr($nameParts[count($nameParts) > 1 ? 1 : 0], 0, 1));
+$volunteerInitials = initials($volunteerName);
 
-// TODO (Paso 6 del plan de desarrollo, RF08): reemplazar por
-// EnrollmentModel::listByVolunteer() con las inscripciones reales.
-$enrollments = [
-    ['tag' => 'Ambiental', 'title' => 'Jornada de reforestación río San Carlos', 'org' => 'Fundación Verde Norte', 'date' => '24 ago 2026', 'status' => 'Aceptada', 'statusBg' => '#A8C9A1', 'statusColor' => '#0B3945', 'photoAlt' => 'reforestación'],
-    ['tag' => 'Cultural', 'title' => 'Rescate de tradiciones orales boyeras', 'org' => 'Casa de la Cultura Zarcero', 'date' => '11 oct 2026', 'status' => 'Pendiente', 'statusBg' => '#E9A227', 'statusColor' => '#4a3106', 'photoAlt' => 'tradiciones boyeras'],
-    ['tag' => 'Salud', 'title' => 'Feria de salud comunitaria', 'org' => 'Cruz Roja — sede local', 'date' => '14 sept 2026', 'status' => 'Completada', 'statusBg' => '#0F4C5C', 'statusColor' => '#fff', 'photoAlt' => 'feria de salud'],
-    ['tag' => 'Educativo', 'title' => 'Tutorías de matemáticas para primaria', 'org' => 'Asociación Aprender Juntos', 'date' => '2 sept 2026', 'status' => 'Rechazada', 'statusBg' => '#F1EEE6', 'statusColor' => '#8a8a85', 'photoAlt' => 'tutorías'],
+$statusColors = [
+    'pending'   => ['bg' => '#E9A227', 'text' => '#4a3106'],
+    'accepted'  => ['bg' => '#A8C9A1', 'text' => '#0B3945'],
+    'rejected'  => ['bg' => '#F1EEE6', 'text' => '#8a8a85'],
+    'completed' => ['bg' => '#0F4C5C', 'text' => '#fff'],
 ];
 
 // TODO (Paso 3 del plan de desarrollo, RF03): reemplazar por las categorías
@@ -76,16 +77,24 @@ $interestCategories = [
         </div>
 
         <div data-profile-panel="enrollments" style="display:flex;flex-direction:column;gap:16px">
+            <?php if ($enrollments === []): ?>
+                <div class="empty-state">
+                    <i class="fa-regular fa-calendar"></i>
+                    <p>Todavía no te has inscrito en ninguna oportunidad.</p>
+                    <a href="<?= e(actionUrl('search_opportunities')) ?>" class="btn btn--primary">Explorar oportunidades</a>
+                </div>
+            <?php endif; ?>
             <?php foreach ($enrollments as $enrollment): ?>
+                <?php $colors = $statusColors[$enrollment['status']] ?? $statusColors['rejected']; ?>
                 <div class="enrollment-row">
-                    <div class="enrollment-row__photo"><img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="<?= htmlspecialchars($enrollment['photoAlt']) ?>"></div>
+                    <div class="enrollment-row__photo"><img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="foto: <?= e($enrollment['title']) ?>"></div>
                     <div class="enrollment-row__info">
-                        <div class="eyebrow-label" style="margin-bottom:0"><?= htmlspecialchars($enrollment['tag']) ?></div>
-                        <h3 class="enrollment-row__title"><?= htmlspecialchars($enrollment['title']) ?></h3>
-                        <div class="enrollment-row__meta"><?= htmlspecialchars($enrollment['org']) ?> · <?= htmlspecialchars($enrollment['date']) ?></div>
+                        <div class="eyebrow-label" style="margin-bottom:0"><?= e($enrollment['category_name']) ?></div>
+                        <h3 class="enrollment-row__title"><?= e($enrollment['title']) ?></h3>
+                        <div class="enrollment-row__meta"><?= e($enrollment['organization_name']) ?> · <?= e(formatDate($enrollment['activity_date'], false)) ?></div>
                     </div>
-                    <div class="enrollment-row__status" style="background:<?= $enrollment['statusBg'] ?>;color:<?= $enrollment['statusColor'] ?>"><?= htmlspecialchars($enrollment['status']) ?></div>
-                    <a href="<?= BASE_URL ?>?action=view_opportunity" style="font-size:13px;font-weight:600;color:var(--color-primary)">Ver detalle</a>
+                    <div class="enrollment-row__status" style="background:<?= $colors['bg'] ?>;color:<?= $colors['text'] ?>"><?= e(statusLabel($enrollment['status'])) ?></div>
+                    <a href="<?= e(actionUrl('view_opportunity', ['id' => (int) $enrollment['opportunity_id']])) ?>" style="font-size:13px;font-weight:600;color:var(--color-primary)">Ver detalle</a>
                 </div>
             <?php endforeach; ?>
         </div>

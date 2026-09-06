@@ -43,6 +43,7 @@ $routes = [
     'enroll'                        => ['EnrollmentController', 'enroll'],
     'accept_enrollment'             => ['EnrollmentController', 'accept'],
     'reject_enrollment'             => ['EnrollmentController', 'reject'],
+    'complete_enrollment'           => ['EnrollmentController', 'complete'],
 ];
 
 $action = $_GET['action'] ?? 'home';

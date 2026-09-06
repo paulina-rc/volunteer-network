@@ -132,7 +132,7 @@ INSERT INTO opportunities (id, organization_id, category_id, title, description,
   (1, 1, 1, 'Jornada de reforestación río San Carlos',
    'Sembramos especies nativas en la ribera del río San Carlos junto a la comunidad de Aguas Zarcas, para restaurar el bosque de galería y proteger la fuente de agua. La actividad incluye una breve charla sobre las especies a sembrar y el cierre con un refrigerio para los participantes.',
    'Ropa de manga larga y botas cerradas\nDisponibilidad de 5 horas\nNo se requiere experiencia previa',
-   'San Carlos, Alajuela', '2026-09-24', '7:00 a. m. – 12:00 m.', 20, 17, 'active', '2026-08-01 09:00:00'),
+   'San Carlos, Alajuela', '2026-09-24', '7:00 a. m. – 12:00 m.', 4, 2, 'active', '2026-08-01 09:00:00'),
 
   (2, 2, 2, 'Tutorías de matemáticas para primaria',
    'Acompañamiento semanal a estudiantes de cuarto a sexto grado que necesitan reforzar matemática. Trabajamos en grupos pequeños dentro de la biblioteca municipal, con material ya preparado por la asociación.',
@@ -221,8 +221,8 @@ INSERT INTO opportunity_skill (opportunity_id, skill_id) VALUES
 -- it is already 'closed' with available_slots = 0.
 -- ------------------------------------------------------------
 INSERT INTO enrollments (opportunity_id, volunteer_id, status, enrollment_date) VALUES
-  -- 1 · Reforestación (20 slots, 3 accepted -> 17 available)
-  (1, 1, 'accepted', '2026-08-10 09:12:00'),
+  -- 1 · Reforestación (4 slots, 2 accepted -> 2 available)
+  -- Accepting the two pending ones fills it and triggers RN05 (auto-close).
   (1, 2, 'accepted', '2026-08-10 10:40:00'),
   (1, 3, 'pending',  '2026-08-11 08:05:00'),
   (1, 4, 'pending',  '2026-08-12 20:15:00'),

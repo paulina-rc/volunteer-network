@@ -77,6 +77,19 @@ class OpportunityController
         $requirements = requirementLines($opportunity['requirements'] ?? null);
         $skills = $opportunityModel->getSkills($id);
 
+        // Lets the panel show "ya estás inscrita" and its current state instead
+        // of a button that would only be rejected (RF11).
+        $currentEnrollment = null;
+        if (isVolunteer() && isset($_SESSION['volunteer_id'])) {
+            $enrollmentModel = new EnrollmentModel();
+            foreach ($enrollmentModel->getByVolunteer((int) $_SESSION['volunteer_id']) as $enrollment) {
+                if ((int) $enrollment['opportunity_id'] === $id) {
+                    $currentEnrollment = $enrollment;
+                    break;
+                }
+            }
+        }
+
         require __DIR__ . '/../views/opportunity_detail.php';
     }
 
