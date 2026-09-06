@@ -63,18 +63,18 @@ $heroSlides = [
     <?php foreach ($heroSlides as $index => $slide): ?>
         <div class="hero__slide<?= $index === 0 ? ' hero__slide--active' : '' ?>" style="background:<?= $slide['gradient'] ?>" data-slide="<?= $index ?>">
             <div class="hero__slide-photo">
-                <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="<?= htmlspecialchars($slide['photoAlt']) ?>">
+                <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="<?= e($slide['photoAlt']) ?>">
             </div>
             <div class="hero__tint" style="background:<?= $slide['tint'] ?>"></div>
             <div class="hero__gradient"></div>
             <div class="hero__content">
-                <div class="hero__eyebrow"><i class="fa-solid <?= htmlspecialchars($slide['icon']) ?>"></i> <?= htmlspecialchars($slide['eyebrow']) ?></div>
-                <h1 class="hero__title"><?= htmlspecialchars($slide['title']) ?></h1>
-                <p class="hero__text"><?= htmlspecialchars($slide['text']) ?></p>
+                <div class="hero__eyebrow"><i class="fa-solid <?= e($slide['icon']) ?>"></i> <?= e($slide['eyebrow']) ?></div>
+                <h1 class="hero__title"><?= e($slide['title']) ?></h1>
+                <p class="hero__text"><?= e($slide['text']) ?></p>
                 <div class="hero__actions">
-                    <a href="<?= htmlspecialchars($slide['cta1Href']) ?>" class="btn btn--primary"><?= htmlspecialchars($slide['cta1']) ?> <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="<?= e($slide['cta1Href']) ?>" class="btn btn--primary"><?= e($slide['cta1']) ?> <i class="fa-solid fa-arrow-right"></i></a>
                     <?php if ($slide['cta2'] !== null): ?>
-                        <a href="<?= htmlspecialchars($slide['cta2Href']) ?>" class="btn hero__cta--light"><?= htmlspecialchars($slide['cta2']) ?></a>
+                        <a href="<?= e($slide['cta2Href']) ?>" class="btn hero__cta--light"><?= e($slide['cta2']) ?></a>
                     <?php endif; ?>
                 </div>
             </div>

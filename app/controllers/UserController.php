@@ -16,6 +16,11 @@ class UserController
             return;
         }
 
+        if (!verifyCsrf()) {
+            $this->render('register', [], ['No pudimos procesar el formulario. Volvé a intentarlo.']);
+            return;
+        }
+
         $role = trim($_POST['role'] ?? '');
         $email = strtolower(trim($_POST['email'] ?? ''));
         $password = (string) ($_POST['password'] ?? '');
@@ -72,6 +77,11 @@ class UserController
     {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             $this->render();
+            return;
+        }
+
+        if (!verifyCsrf()) {
+            $this->render('login', ['No pudimos procesar el formulario. Volvé a intentarlo.']);
             return;
         }
 
@@ -170,6 +180,11 @@ class UserController
 
     private function createSession(int $userId, string $role, int $profileId): void
     {
+        // New session id the moment the privileges change, so a session id
+        // captured before login cannot be reused afterwards. Session data
+        // (including the CSRF token) survives the regeneration.
+        session_regenerate_id(true);
+
         $_SESSION['user_id'] = $userId;
         $_SESSION['role'] = $role;
 

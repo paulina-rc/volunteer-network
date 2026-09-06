@@ -390,6 +390,24 @@ class OpportunityModel
      */
     public function syncAvailableSlots(int $id): bool
     {
+        // Read the counter before recomputing it, to tell apart the two reasons
+        // an opportunity can be closed while having free slots:
+        //   was 0 before -> the fill rule closed it and a slot just came back,
+        //                   so reopening is correct;
+        //   was > 0 before -> the organization closed it by hand (RN09), and
+        //                   that decision must survive later enrollment changes.
+        $previous = $this->connection->prepare(
+            'SELECT available_slots FROM opportunities WHERE id = :id'
+        );
+        $previous->execute(['id' => $id]);
+        $previousSlots = $previous->fetchColumn();
+
+        if ($previousSlots === false) {
+            return false;
+        }
+
+        $wasFull = (int) $previousSlots === 0;
+
         $recount = $this->connection->prepare(
             "UPDATE opportunities o
                 SET o.available_slots = GREATEST(0, o.total_slots - (
@@ -418,9 +436,11 @@ class OpportunityModel
         if ($isFull && $status === 'active') {
             // RN05: the last slot was taken, close it automatically.
             $this->setStatus($id, 'closed');
-        } elseif (!$isFull && $status === 'closed' && (int) $opportunity['is_upcoming'] === 1) {
-            // A slot opened up again (an acceptance was undone) and the date has
-            // not passed, so the opportunity goes back on the board.
+        } elseif ($wasFull && !$isFull && $status === 'closed' && (int) $opportunity['is_upcoming'] === 1) {
+            // A slot opened up again (an acceptance was undone) on an
+            // opportunity that RN05 had closed, and the date has not passed, so
+            // it goes back on the board. An opportunity closed by hand while it
+            // still had slots is left alone (RN09).
             $this->setStatus($id, 'active');
         }
 

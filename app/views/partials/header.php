@@ -41,8 +41,8 @@ if ($userChipLabel !== '') {
     <a href="<?= BASE_URL ?>" class="logo-enlaza">Enlaza</a>
 
     <?php if ($headerVariant === 'minimal'): ?>
-      <a href="<?= htmlspecialchars($backLinkHref ?? BASE_URL) ?>" class="site-header__back-link">
-        <i class="fa-solid fa-arrow-left"></i> <?= htmlspecialchars($backLinkLabel ?? 'Volver al inicio') ?>
+      <a href="<?= e($backLinkHref ?? BASE_URL) ?>" class="site-header__back-link">
+        <i class="fa-solid fa-arrow-left"></i> <?= e($backLinkLabel ?? 'Volver al inicio') ?>
       </a>
     <?php else: ?>
       <nav class="site-header__nav">
@@ -63,9 +63,9 @@ if ($userChipLabel !== '') {
         <?php endif; ?>
 
         <?php if ($loggedInRole !== null): ?>
-          <a href="<?= htmlspecialchars($userProfileHref) ?>" class="site-header__user">
-            <span class="site-header__user-avatar"><?= htmlspecialchars($userChipInitials) ?></span>
-            <span class="site-header__user-name"><?= htmlspecialchars($userChipLabel) ?></span>
+          <a href="<?= e($userProfileHref) ?>" class="site-header__user">
+            <span class="site-header__user-avatar"><?= e($userChipInitials) ?></span>
+            <span class="site-header__user-name"><?= e($userChipLabel) ?></span>
           </a>
           <a href="<?= BASE_URL ?>?action=logout" title="Cerrar sesión" class="site-header__icon-btn">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>

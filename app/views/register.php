@@ -32,21 +32,22 @@
                 <p class="auth-subtext">Ingresá con tu correo para continuar en Enlaza.</p>
 
                 <?php if ($successMessage !== ''): ?>
-                    <p class="success-message"><?= htmlspecialchars($successMessage) ?></p>
+                    <p class="success-message"><?= e($successMessage) ?></p>
                 <?php endif; ?>
 
                 <?php if (!empty($loginErrors)): ?>
                     <ul class="error-list">
                         <?php foreach ($loginErrors as $error): ?>
-                            <li><?= htmlspecialchars($error) ?></li>
+                            <li><?= e($error) ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
 
-                <form method="post" action="<?= BASE_URL ?>?action=login" novalidate>
+                <form method="post" action="<?= e(actionUrl('login')) ?>" novalidate>
+                    <?= csrfField() ?>
                     <div class="form-group">
                         <label for="login-email">Correo electrónico</label>
-                        <input type="email" id="login-email" name="email" value="<?= htmlspecialchars($loginEmail) ?>" placeholder="vos@correo.com" required maxlength="150">
+                        <input type="email" id="login-email" name="email" value="<?= e($loginEmail) ?>" placeholder="vos@correo.com" required maxlength="150">
                     </div>
                     <div class="form-group">
                         <label for="login-password">Contraseña</label>
@@ -64,12 +65,13 @@
                 <?php if (!empty($registerErrors)): ?>
                     <ul class="error-list">
                         <?php foreach ($registerErrors as $error): ?>
-                            <li><?= htmlspecialchars($error) ?></li>
+                            <li><?= e($error) ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
 
-                <form method="post" action="<?= BASE_URL ?>?action=register_user" novalidate id="form-register">
+                <form method="post" action="<?= e(actionUrl('register_user')) ?>" novalidate id="form-register">
+                    <?= csrfField() ?>
                     <div class="role-selector">
                         <label class="role-selector__option">
                             <input type="radio" name="role" value="volunteer" <?= ($registerData['role'] ?? 'volunteer') === 'volunteer' ? 'checked' : '' ?>>
@@ -85,16 +87,16 @@
 
                     <div class="form-group" data-role-field="volunteer">
                         <label for="register-full-name">Nombre completo</label>
-                        <input type="text" id="register-full-name" name="full_name" value="<?= htmlspecialchars($registerData['full_name'] ?? '') ?>" placeholder="Ana Rodríguez" maxlength="150">
+                        <input type="text" id="register-full-name" name="full_name" value="<?= e($registerData['full_name'] ?? '') ?>" placeholder="Ana Rodríguez" maxlength="150">
                     </div>
                     <div class="form-group" data-role-field="organization">
                         <label for="register-organization-name">Nombre de la organización</label>
-                        <input type="text" id="register-organization-name" name="organization_name" value="<?= htmlspecialchars($registerData['organization_name'] ?? '') ?>" placeholder="Fundación Verde Norte" maxlength="150">
+                        <input type="text" id="register-organization-name" name="organization_name" value="<?= e($registerData['organization_name'] ?? '') ?>" placeholder="Fundación Verde Norte" maxlength="150">
                     </div>
 
                     <div class="form-group">
                         <label for="register-email">Correo electrónico</label>
-                        <input type="email" id="register-email" name="email" value="<?= htmlspecialchars($registerData['email'] ?? '') ?>" placeholder="vos@correo.com" required maxlength="150">
+                        <input type="email" id="register-email" name="email" value="<?= e($registerData['email'] ?? '') ?>" placeholder="vos@correo.com" required maxlength="150">
                     </div>
                     <div class="form-group">
                         <label for="register-password">Contraseña</label>

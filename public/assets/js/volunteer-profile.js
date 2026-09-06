@@ -1,7 +1,13 @@
+/**
+ * Volunteer profile tabs.
+ *
+ * The active panel is decided on the server (?panel=), so this only switches
+ * between the panels already rendered on the page.
+ */
 document.addEventListener('DOMContentLoaded', function () {
     var tabButtons = document.querySelectorAll('[data-profile-tab]');
     var panels = document.querySelectorAll('[data-profile-panel]');
-    var displayByPanel = { enrollments: 'flex', skills: 'block' };
+    var displayByPanel = { enrollments: 'flex', recommendations: 'block', skills: 'block' };
 
     tabButtons.forEach(function (button) {
         button.addEventListener('click', function () {
@@ -12,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             panels.forEach(function (panel) {
                 var key = panel.dataset.profilePanel;
-                panel.style.display = key === target ? displayByPanel[key] : 'none';
+                panel.style.display = key === target ? (displayByPanel[key] || 'block') : 'none';
             });
         });
     });

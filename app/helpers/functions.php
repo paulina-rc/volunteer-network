@@ -301,6 +301,35 @@ function enrollmentBlockedReason(array $opportunity): string
 }
 
 /**
+ * RN08 — why an opportunity was recommended, in the priority order the rule
+ * defines: skills first, then interests, then location. Takes a row from
+ * OpportunityModel::getRecommendationsFor(), which carries the three counters.
+ *
+ * Showing this next to each suggestion is what makes the rule visible instead
+ * of the list looking arbitrary.
+ */
+function recommendationReason(array $opportunity): string
+{
+    $skillMatches = (int) ($opportunity['skill_matches'] ?? 0);
+
+    if ($skillMatches > 0) {
+        return $skillMatches === 1
+            ? 'Coincide con 1 habilidad tuya'
+            : 'Coincide con ' . $skillMatches . ' habilidades tuyas';
+    }
+
+    if ((int) ($opportunity['interest_match'] ?? 0) > 0) {
+        return 'Es del área de ' . ($opportunity['category_name'] ?? '') . ', que te interesa';
+    }
+
+    if ((int) ($opportunity['location_match'] ?? 0) > 0) {
+        return 'Se realiza cerca de tu ubicación';
+    }
+
+    return '';
+}
+
+/**
  * Builds the avatar initials for a person or organization name:
  * "Ana Rodríguez" => "AR", "Fundación Verde Norte" => "FV", "Enlaza" => "EN".
  */

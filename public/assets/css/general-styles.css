@@ -579,3 +579,188 @@ a:hover { color: var(--color-accent); }
 .enrollment-row__name { font-size: 14.5px; font-weight: 600; color: var(--color-text); }
 .enrollment-row__contact { font-size: 12.5px; color: #8a8a85; }
 .enrollment-row__actions { display: flex; gap: 8px; }
+
+/* ============================================================
+   Paso 5 — form feedback, profile and organization screens
+   ============================================================ */
+
+.field-error {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #A13B22;
+}
+.required-note { font-weight: 400; color: #8a8a85; font-size: 12px; }
+
+.notice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 24px 0;
+}
+.notice i { margin-top: 2px; flex-shrink: 0; }
+.notice a { font-weight: 600; color: inherit; text-decoration: underline; }
+.notice--warning {
+  background: #FDF2DC;
+  border: 1px solid var(--color-impact);
+  color: #6b4a08;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 18px;
+  margin-top: 8px;
+}
+/* Inside a .form-group these labels would otherwise inherit the uppercase
+   block styling meant for field labels, and the boxes would stretch to 100%. */
+.form-group .checkbox-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--color-text);
+  text-transform: none;
+  letter-spacing: normal;
+  cursor: pointer;
+}
+.form-group .checkbox-grid input[type="checkbox"] {
+  width: auto;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-tabs { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
+
+.recommendation { display: flex; flex-direction: column; }
+.recommendation__reason {
+  margin: 10px 0 0;
+  padding: 9px 12px;
+  background: var(--color-nature);
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0B3945;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.org-summary { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; margin: 44px 0; }
+.org-summary__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start; }
+
+.org-section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+}
+.org-header-card__actions { display: flex; gap: 10px; padding-bottom: 6px; flex-wrap: wrap; }
+
+.card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.card-actions .btn { flex: 1 1 auto; }
+
+.opportunity-card__stats { font-size: 12px; color: #6d6d68; margin-bottom: 14px; }
+.enrollment-row__link { font-size: 13px; font-weight: 600; color: var(--color-primary); }
+
+/* ============================================================
+   Responsive — the layout was desktop-only until here.
+   ============================================================ */
+
+/* Tablets and small laptops */
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .steps-grid { grid-template-columns: 1fr; }
+  .search-layout { grid-template-columns: 1fr; }
+  .detail-layout { grid-template-columns: 1fr; }
+  .org-summary { grid-template-columns: 1fr; gap: 24px; margin: 32px 0; }
+  .site-footer__grid { grid-template-columns: 1fr 1fr; }
+  .search-card { flex-wrap: wrap; }
+  .hero { height: 540px; }
+}
+
+/* Phones */
+@media (max-width: 640px) {
+  .container { padding: 0 16px; }
+  .narrow-page { padding: 28px 16px 64px; }
+
+  .site-header__bar { flex-wrap: wrap; gap: 10px; padding: 12px 16px; }
+  .site-header__nav { order: 3; width: 100%; gap: 14px; overflow-x: auto; }
+  .site-header__actions { gap: 8px; margin-left: auto; }
+  .site-header__user-name { display: none; }
+
+  .hero { height: auto; min-height: 480px; }
+  .hero__title { font-size: 26px; }
+  .hero__text { font-size: 14px; }
+  .hero__actions { flex-wrap: wrap; }
+  .hero__actions .btn { width: 100%; text-align: center; }
+
+  .search-card { flex-direction: column; align-items: stretch; margin: 0 16px; padding: 18px; gap: 14px; }
+  .search-card__submit { width: 100%; }
+
+  .stats-banner__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+
+  .grid-3, .grid-5 { grid-template-columns: 1fr; }
+
+  .form-group-row { grid-template-columns: 1fr; }
+  .checkbox-grid { grid-template-columns: 1fr; }
+  .form-card { padding: 20px 16px; }
+  .form-card__actions { flex-direction: column; }
+  .form-card__actions .btn { width: 100%; }
+
+  .detail-layout { padding: 16px 16px 64px; gap: 24px; }
+  .detail-title { font-size: 24px; }
+  .detail-meta { gap: 10px; }
+
+  /* Stack the enrollment row instead of letting the badge push it wide */
+  .enrollment-row { flex-direction: column; align-items: stretch; gap: 12px; padding: 16px; }
+  .enrollment-row__photo { width: 100%; height: 140px; }
+  .enrollment-row__photo img { width: 100%; height: 100%; object-fit: cover; }
+  .enrollment-row__status { align-self: flex-start; }
+  .enrollment-row__actions { display: flex; gap: 8px; }
+  .enrollment-row__actions .btn { flex: 1; }
+
+  .profile-hero__top { flex-direction: column; align-items: flex-start; gap: 16px; text-align: left; }
+  .profile-hero__name { font-size: 24px; }
+  .profile-hero__meta { flex-direction: column; gap: 6px; align-items: flex-start; }
+  .profile-hero__stats { grid-template-columns: 1fr; gap: 12px; }
+  .profile-hero__actions { width: 100%; }
+  .profile-hero__actions .btn { width: 100%; text-align: center; }
+
+  .org-header-card__inner { flex-direction: column; align-items: flex-start; transform: translateY(-24px); gap: 14px; }
+  .org-header-card__actions { width: 100%; }
+  .org-header-card__actions .btn { flex: 1; text-align: center; }
+  .org-summary__stats { grid-template-columns: 1fr 1fr; }
+  .org-cover { height: 180px; }
+
+  .auth-split { flex-direction: column; min-height: 0; }
+  .auth-split__photo { display: none; }
+  /* The 420px minimum is what pushed this screen past a 375px viewport. */
+  .auth-split__form-side { min-width: 0; padding: 28px 16px 56px; }
+  .auth-split__form-wrap { max-width: 100%; }
+  .segmented__option { padding-left: 8px; padding-right: 8px; font-size: 13px; }
+
+  .site-footer__grid { grid-template-columns: 1fr; gap: 28px; }
+  .site-footer__bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  .cta-band__actions { flex-direction: column; }
+  .cta-band__actions .btn { width: 100%; text-align: center; }
+
+  .search-results-bar { width: 100%; }
+  .search-results-bar select { width: 100%; }
+
+  .page-banner__title { font-size: 24px; }
+  .section-intro__title { font-size: 22px; }
+}
+
+/* Nothing may push the page sideways at any width. */
+@media (max-width: 900px) {
+  html, body { max-width: 100%; overflow-x: hidden; }
+  img, video { max-width: 100%; height: auto; }
+}
