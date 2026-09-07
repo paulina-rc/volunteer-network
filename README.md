@@ -32,9 +32,12 @@ reglas de negocio y plan de desarrollo) está en [`CLAUDE.md`](CLAUDE.md).
    así que saltarse la migración hace fallar la importación.
 
 3. Revisá `config/config.php` y ajustá `DB_USER` / `DB_PASS` si tu MySQL local los
-   requiere. `BASE_URL` está en `/enlaza/public/`: cambialo si usás otra carpeta.
-4. Configurá el servidor para que el **document root** apunte a la carpeta `public/`
-   (o accedé directamente a `http://localhost/enlaza/public/`).
+   requiere. **No hace falta tocar `BASE_URL`**: se calcula solo a partir de la URL
+   del pedido, así que la carpeta puede llamarse como sea, incluso con espacios
+   (`Red de voluntariados`), y las rutas de CSS, JS e imágenes se arman bien.
+4. Configurá el servidor para que el **document root** apunte a la carpeta `public/`,
+   o accedé directamente a la carpeta dentro de `htdocs`, por ejemplo
+   `http://localhost/Red%20de%20voluntariados/public/`.
 
 ## Cuentas de prueba
 
