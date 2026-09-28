@@ -33,7 +33,7 @@ $today = date('Y-m-d');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($organization['name']) ?> · Enlaza</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/general-styles.css">
+    <link rel="stylesheet" href="<?= assetUrl('css/general-styles.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>

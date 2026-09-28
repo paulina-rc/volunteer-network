@@ -13,7 +13,7 @@ function renderPending(string $title, string $planStep): void
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?= htmlspecialchars($title) ?> · Enlaza</title>
-        <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/general-styles.css">
+        <link rel="stylesheet" href="<?= assetUrl('css/general-styles.css') ?>">
     </head>
     <body>
         <div class="pending-container">
@@ -26,6 +26,38 @@ function renderPending(string $title, string $planStep): void
     </body>
     </html>
     <?php
+}
+
+/**
+ * Public URL of a file under public/assets, with its modification time as a
+ * ?v= query string. Browsers cache CSS and images aggressively; the version
+ * changes whenever the file does, so an edited stylesheet or a replaced image
+ * is always downloaded again instead of served stale from cache.
+ */
+function assetUrl(string $relativePath): string
+{
+    $filePath = dirname(__DIR__, 2) . '/public/assets/' . $relativePath;
+    $version = is_file($filePath) ? filemtime($filePath) : 0;
+
+    return BASE_URL . 'assets/' . $relativePath . '?v=' . $version;
+}
+
+/**
+ * Brand color for a category's cover block (cards and opportunity detail),
+ * since opportunities have no image of their own. Unknown categories fall
+ * back to the primary petrol green.
+ */
+function categoryColor(string $categoryName): string
+{
+    $categoryColors = [
+        'Ambiental' => '#A8C9A1',
+        'Educativo' => '#E9A227',
+        'Salud' => '#5C8A78',
+        'Comunitario' => '#0F4C5C',
+        'Cultural' => '#F26B4A',
+    ];
+
+    return $categoryColors[$categoryName] ?? '#0F4C5C';
 }
 
 /**

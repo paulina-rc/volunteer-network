@@ -25,7 +25,7 @@ if (!empty($opportunity['founded_year'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($opportunity['title']) ?> · Enlaza</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/general-styles.css">
+    <link rel="stylesheet" href="<?= assetUrl('css/general-styles.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -37,8 +37,9 @@ if (!empty($opportunity['founded_year'])) {
 
 <section class="container detail-layout">
     <div>
-        <div class="detail-photo">
-            <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="foto: <?= e($opportunity['title']) ?>">
+        <?php $detailColor = categoryColor($opportunity['category_name']); ?>
+        <div class="detail-photo category-cover" style="background:<?= $detailColor ?>;color:<?= contrastColor($detailColor) ?>">
+            <span class="category-cover__label category-cover__label--large"><?= e($opportunity['category_name']) ?></span>
         </div>
         <div class="eyebrow-label"><?= e($opportunity['category_name']) ?></div>
         <h1 class="detail-title"><?= e($opportunity['title']) ?></h1>

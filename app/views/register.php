@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Iniciar sesión o crear cuenta · Enlaza</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/general-styles.css">
+    <link rel="stylesheet" href="<?= assetUrl('css/general-styles.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -75,12 +75,10 @@
                     <div class="role-selector">
                         <label class="role-selector__option">
                             <input type="radio" name="role" value="volunteer" <?= ($registerData['role'] ?? 'volunteer') === 'volunteer' ? 'checked' : '' ?>>
-                            <i class="fa-solid fa-hand-holding-heart"></i>
                             <span>Soy voluntario</span>
                         </label>
                         <label class="role-selector__option">
                             <input type="radio" name="role" value="organization" <?= ($registerData['role'] ?? '') === 'organization' ? 'checked' : '' ?>>
-                            <i class="fa-solid fa-people-roof"></i>
                             <span>Soy organización</span>
                         </label>
                     </div>
@@ -116,6 +114,6 @@
     </div>
 </section>
 
-<script src="<?= BASE_URL ?>assets/js/register.js"></script>
+<script src="<?= assetUrl('js/register.js') ?>"></script>
 </body>
 </html>

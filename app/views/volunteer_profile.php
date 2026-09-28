@@ -37,7 +37,7 @@ $activePanel = in_array($activePanel, $panels, true) ? $activePanel : 'enrollmen
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mi perfil · Enlaza</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/general-styles.css">
+    <link rel="stylesheet" href="<?= assetUrl('css/general-styles.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -101,13 +101,13 @@ $activePanel = in_array($activePanel, $panels, true) ? $activePanel : 'enrollmen
         <div data-profile-panel="recommendations" style="<?= $activePanel === 'recommendations' ? 'display:block' : 'display:none' ?>">
             <?php if (!$hasProfileData): ?>
                 <div class="empty-state">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <i class="fa-regular fa-lightbulb"></i>
                     <p>Todavía no podemos recomendarte nada. Marcá tus habilidades y las categorías que te interesan, y armamos sugerencias hechas a tu medida.</p>
                     <a href="<?= e(actionUrl('view_volunteer_profile', ['panel' => 'skills'])) ?>" class="btn btn--primary">Completar mi perfil</a>
                 </div>
             <?php elseif ($recommendations === []): ?>
                 <div class="empty-state">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <i class="fa-regular fa-lightbulb"></i>
                     <p>Por ahora no hay oportunidades abiertas que coincidan con tu perfil. Probá explorando todas las publicadas.</p>
                     <a href="<?= e(actionUrl('search_opportunities')) ?>" class="btn btn--secondary">Ver todas las oportunidades</a>
                 </div>
@@ -118,7 +118,6 @@ $activePanel = in_array($activePanel, $panels, true) ? $activePanel : 'enrollmen
                         <div class="recommendation">
                             <?php $cardCompact = true; require __DIR__ . '/partials/opportunity_card.php'; ?>
                             <p class="recommendation__reason">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i>
                                 <?= e(recommendationReason($cardOpportunity)) ?>
                             </p>
                         </div>
@@ -198,6 +197,6 @@ $activePanel = in_array($activePanel, $panels, true) ? $activePanel : 'enrollmen
     </div>
 </section>
 
-<script src="<?= BASE_URL ?>assets/js/volunteer-profile.js"></script>
+<script src="<?= assetUrl('js/volunteer-profile.js') ?>"></script>
 </body>
 </html>

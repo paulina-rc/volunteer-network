@@ -38,7 +38,12 @@ if ($userChipLabel !== '') {
 ?>
 <header class="site-header">
   <div class="site-header__bar">
-    <a href="<?= BASE_URL ?>" class="logo-enlaza">Enlaza</a>
+    <a href="<?= BASE_URL ?>" class="logo-enlaza">
+      <span>Enlaza</span>
+      <?php if (is_file(dirname(__DIR__, 3) . '/public/assets/img/logo-enlaza.png')): ?>
+        <img src="<?= assetUrl('img/logo-enlaza.png') ?>" alt="Enlaza" class="logo-enlaza__mark">
+      <?php endif; ?>
+    </a>
 
     <?php if ($headerVariant === 'minimal'): ?>
       <a href="<?= e($backLinkHref ?? BASE_URL) ?>" class="site-header__back-link">

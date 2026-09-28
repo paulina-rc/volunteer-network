@@ -4,7 +4,6 @@ $showSearchIcon = true;
 
 $heroSlides = [
     [
-        'icon' => 'fa-heart',
         'eyebrow' => 'Conecta. Participa. Transforma.',
         'title' => 'Encontrá la oportunidad de voluntariado que va con vos',
         'text' => 'Enlaza conecta a personas con ganas de ayudar y organizaciones sin fines de lucro que necesitan apoyo. La tecnología al servicio de la comunidad.',
@@ -12,35 +11,30 @@ $heroSlides = [
         'cta1Href' => BASE_URL . '?action=register&tab=register',
         'cta2' => 'Soy una organización',
         'cta2Href' => BASE_URL . '?action=register&tab=register',
+        'photo' => 'carrusel-1.jpg',
         'gradient' => 'linear-gradient(120deg, #0F4C5C 0%, #146579 55%, #A8C9A1 130%)',
-        'tint' => 'rgba(15,76,92,0.35)',
-        'photoAlt' => 'foto: jornada de reforestación comunitaria a orillas del río San Carlos, luz de mañana',
     ],
     [
-        'icon' => 'fa-users',
-        'eyebrow' => $platformStats['organizations'] . ' organizaciones aliadas',
-        'title' => 'Organizaciones que ya están generando cambios reales',
+        'eyebrow' => $platformStats['organizations'] . ' organizaciones registradas',
+        'title' => 'Organizaciones de la Zona Norte que buscan voluntarios',
         'text' => 'Publicá tus oportunidades, gestioná inscripciones y encontrá voluntarios afines a tu causa en un solo lugar.',
         'cta1' => 'Publicar oportunidad',
         'cta1Href' => BASE_URL . '?action=publish_opportunity',
         'cta2' => 'Ver organizaciones',
         'cta2Href' => BASE_URL . '?action=view_organization_profile',
+        'photo' => 'carrusel-2.jpg',
         'gradient' => 'linear-gradient(120deg, #F26B4A 0%, #c9502f 60%, #E9A227 140%)',
-        'tint' => 'rgba(11,57,69,0.3)',
-        'photoAlt' => 'foto: voluntaria dando tutoría a un niño en un aula rural, luz natural de ventana',
     ],
     [
-        'icon' => 'fa-seedling',
-        'eyebrow' => 'Impacto ambiental, social y educativo',
-        'title' => 'Cada hora de voluntariado transforma una comunidad',
-        'text' => 'Explorá oportunidades por categoría, ubicación y disponibilidad, y sumate a una causa que te importe.',
+        'eyebrow' => 'Ambiente, educación, salud y más',
+        'title' => 'Explorá oportunidades por categoría, ubicación y fecha',
+        'text' => 'Revisá lo que las organizaciones tienen publicado, leé los detalles de cada actividad e inscribite en la que te sirva.',
         'cta1' => 'Explorar oportunidades',
         'cta1Href' => BASE_URL . '?action=search_opportunities',
         'cta2' => null,
         'cta2Href' => null,
+        'photo' => 'carrusel-3.jpg',
         'gradient' => 'linear-gradient(120deg, #E9A227 0%, #c78415 55%, #0F4C5C 140%)',
-        'tint' => 'rgba(15,76,92,0.3)',
-        'photoAlt' => 'foto: brigada de salud comunitaria atendiendo a vecinos en una feria rural',
     ],
 ];
 
@@ -53,7 +47,7 @@ $heroSlides = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Enlaza — Conecta. Participa. Transforma.</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/general-styles.css">
+    <link rel="stylesheet" href="<?= assetUrl('css/general-styles.css') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -61,14 +55,17 @@ $heroSlides = [
 
 <section class="hero">
     <?php foreach ($heroSlides as $index => $slide): ?>
-        <div class="hero__slide<?= $index === 0 ? ' hero__slide--active' : '' ?>" style="background:<?= $slide['gradient'] ?>" data-slide="<?= $index ?>">
-            <div class="hero__slide-photo">
-                <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="<?= e($slide['photoAlt']) ?>">
-            </div>
-            <div class="hero__tint" style="background:<?= $slide['tint'] ?>"></div>
-            <div class="hero__gradient"></div>
+        <?php
+        // Each slide uses its photo when the file exists; otherwise it falls back to its brand gradient.
+        $slideHasPhoto = is_file(dirname(__DIR__, 2) . '/public/assets/img/' . $slide['photo']);
+        $slideBackground = $slideHasPhoto
+            ? "url('" . assetUrl('img/' . $slide['photo']) . "') center / cover no-repeat"
+            : $slide['gradient'];
+        ?>
+        <div class="hero__slide<?= $index === 0 ? ' hero__slide--active' : '' ?>" style="background:<?= $slideBackground ?>" data-slide="<?= $index ?>">
+            <div class="<?= $slideHasPhoto ? 'hero__overlay' : 'hero__gradient' ?>"></div>
             <div class="hero__content">
-                <div class="hero__eyebrow"><i class="fa-solid <?= e($slide['icon']) ?>"></i> <?= e($slide['eyebrow']) ?></div>
+                <div class="hero__eyebrow"><?= e($slide['eyebrow']) ?></div>
                 <h1 class="hero__title"><?= e($slide['title']) ?></h1>
                 <p class="hero__text"><?= e($slide['text']) ?></p>
                 <div class="hero__actions">
@@ -124,9 +121,9 @@ $heroSlides = [
 <section class="stats-banner">
     <div class="container stats-banner__grid">
         <div><div class="stats-banner__number"><?= (int) $platformStats['opportunities'] ?></div><div class="stats-banner__label">Oportunidades activas</div></div>
-        <div><div class="stats-banner__number"><?= (int) $platformStats['organizations'] ?></div><div class="stats-banner__label">Organizaciones aliadas</div></div>
-        <div><div class="stats-banner__number"><?= (int) $platformStats['volunteers'] ?></div><div class="stats-banner__label">Voluntarios conectados</div></div>
-        <div><div class="stats-banner__number"><?= (int) $platformStats['locations'] ?></div><div class="stats-banner__label">Comunidades impactadas</div></div>
+        <div><div class="stats-banner__number"><?= (int) $platformStats['organizations'] ?></div><div class="stats-banner__label">Organizaciones registradas</div></div>
+        <div><div class="stats-banner__number"><?= (int) $platformStats['volunteers'] ?></div><div class="stats-banner__label">Voluntarios registrados</div></div>
+        <div><div class="stats-banner__number"><?= (int) $platformStats['locations'] ?></div><div class="stats-banner__label">Comunidades con actividades</div></div>
     </div>
     <p class="stats-banner__note">Datos tomados de la base de datos del sistema.</p>
 </section>
@@ -134,9 +131,9 @@ $heroSlides = [
 <section id="categorias" class="page-section">
     <div class="container">
         <div class="section-intro">
-            <div class="section-intro__eyebrow">Explora por interés</div>
+            <div class="section-intro__eyebrow">Por área</div>
             <h2 class="section-intro__title">Categorías de voluntariado</h2>
-            <p class="section-intro__text">Elegí un área y descubrí oportunidades que se ajustan a tus habilidades y disponibilidad.</p>
+            <p class="section-intro__text">Elegí un área para ver las oportunidades abiertas en ella.</p>
         </div>
         <div class="grid-5">
             <?php foreach ($categories as $category): ?>
@@ -160,7 +157,7 @@ $heroSlides = [
         <div class="section-intro">
             <div class="section-intro__eyebrow">Recién publicadas</div>
             <h2 class="section-intro__title">Oportunidades destacadas</h2>
-            <p class="section-intro__text">Una muestra de lo que las organizaciones están publicando esta semana.</p>
+            <p class="section-intro__text">Las últimas oportunidades que publicaron las organizaciones.</p>
         </div>
         <?php if ($featuredOpportunities === []): ?>
             <div class="empty-state">
@@ -183,7 +180,7 @@ $heroSlides = [
 <section id="como-funciona" class="page-section">
     <div class="container">
         <div class="section-intro" style="margin-bottom:44px">
-            <div class="section-intro__eyebrow">Es simple</div>
+            <div class="section-intro__eyebrow">Paso a paso</div>
             <h2 class="section-intro__title">¿Cómo funciona Enlaza?</h2>
         </div>
         <div style="display:flex;justify-content:center;gap:10px;margin-bottom:44px">
@@ -232,14 +229,14 @@ $heroSlides = [
 <section class="testimonial">
     <div class="container">
         <blockquote class="testimonial__quote">"Juntos generamos cambios que importan."</blockquote>
-        <div class="testimonial__author">— Ana, voluntaria en Enlaza (testimonio ilustrativo)</div>
+        <div class="testimonial__author">— Equipo Enlaza</div>
     </div>
 </section>
 
 <section class="cta-band">
     <div class="container">
-        <h2 class="cta-band__title">¿Listo para generar un cambio en tu comunidad?</h2>
-        <p class="cta-band__text">Uníte a Enlaza hoy, ya sea que querás ofrecer tu tiempo o encontrar las manos que tu organización necesita.</p>
+        <h2 class="cta-band__title">¿Querés sumarte?</h2>
+        <p class="cta-band__text">Creá una cuenta como voluntario para inscribirte en actividades, o como organización para publicar las que necesitan apoyo.</p>
         <div class="cta-band__actions">
             <a href="<?= BASE_URL ?>?action=register&tab=register" class="btn btn--primary">Quiero ser voluntario</a>
             <a href="<?= BASE_URL ?>?action=publish_opportunity" class="btn btn--secondary btn--outline-light">Quiero publicar oportunidades</a>
@@ -249,6 +246,6 @@ $heroSlides = [
 
 <?php require __DIR__ . '/partials/footer.php'; ?>
 
-<script src="<?= BASE_URL ?>assets/js/home.js"></script>
+<script src="<?= assetUrl('js/home.js') ?>"></script>
 </body>
 </html>
