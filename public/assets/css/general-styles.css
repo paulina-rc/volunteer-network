@@ -190,9 +190,9 @@ a:hover { color: var(--color-accent); }
 }
 
 .auth-split { min-height: calc(100vh - 71px); display: flex; align-items: stretch; }
-.auth-split__photo { flex: 1; min-width: 340px; position: relative; }
+.auth-split__photo { flex: 1; min-width: 340px; position: relative; background-size: cover; background-position: center; }
 .auth-split__photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-.auth-split__photo-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,76,92,0.15), rgba(11,57,69,0.55)); }
+.auth-split__photo-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,76,92,0.55), rgba(11,57,69,0.75)); }
 .auth-split__photo-content { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 48px; color: #fff; }
 .auth-split__quote { font-family: 'Archivo', sans-serif; font-size: 26px; font-weight: 700; max-width: 360px; line-height: 1.3; }
 .auth-split__quote-note { font-size: 13px; opacity: .85; margin-top: 12px; }

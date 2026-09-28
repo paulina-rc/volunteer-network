@@ -11,12 +11,15 @@
 <?php $headerVariant = 'minimal'; $backLinkHref = BASE_URL; $backLinkLabel = 'Volver al inicio'; require __DIR__ . '/partials/header.php'; ?>
 
 <section class="auth-split">
-    <div class="auth-split__photo">
-        <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="foto: grupo de voluntarios y organizadores conversando antes de iniciar una actividad, San Carlos">
+    <?php $authPhotoExists = is_file(dirname(__DIR__, 2) . '/public/assets/img/login-imagen.jpg'); ?>
+    <div class="auth-split__photo"<?php if ($authPhotoExists): ?> style="background-image:url('<?= assetUrl('img/login-imagen.jpg') ?>')"<?php endif; ?>>
+        <?php if (!$authPhotoExists): ?>
+            <img src="<?= BASE_URL ?>assets/img/placeholder.jpg" alt="">
+        <?php endif; ?>
         <div class="auth-split__photo-overlay"></div>
         <div class="auth-split__photo-content">
             <div class="auth-split__quote">"Conecta. Participa. Transforma."</div>
-            <div class="auth-split__quote-note">Más de 800 voluntarios ya son parte de Enlaza.</div>
+            <div class="auth-split__quote-note">Voluntarios y organizaciones de la Zona Norte, conectados en un solo lugar.</div>
         </div>
     </div>
 
