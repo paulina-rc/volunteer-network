@@ -389,10 +389,11 @@ a:hover { color: var(--color-accent); }
 .opportunity-card--compact .opportunity-card__photo { height: 150px; }
 .opportunity-card__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* Solid category-colored block that stands in for an opportunity photo */
-.category-cover { display: flex; align-items: center; justify-content: center; }
-.category-cover__label { font-family: 'Comfortaa', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: .01em; }
-.category-cover__label--large { font-size: 34px; }
+/* Category photo (or its solid color as fallback) standing in for an opportunity photo */
+.category-cover { position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
+/* Soft bottom shade so the card's tag and badges stay readable; ::before paints below them.
+   The detail cover has nothing on top of it, so it keeps the photo unshaded. */
+.opportunity-card__photo.category-cover::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.35) 100%); }
 .opportunity-card__badge {
   position: absolute; top: 14px; right: 14px;
   font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px;

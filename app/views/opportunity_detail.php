@@ -37,10 +37,7 @@ if (!empty($opportunity['founded_year'])) {
 
 <section class="container detail-layout">
     <div>
-        <?php $detailColor = categoryColor($opportunity['category_name']); ?>
-        <div class="detail-photo category-cover" style="background:<?= $detailColor ?>;color:<?= contrastColor($detailColor) ?>">
-            <span class="category-cover__label category-cover__label--large"><?= e($opportunity['category_name']) ?></span>
-        </div>
+        <div class="detail-photo category-cover" style="<?= categoryCoverStyle($opportunity['category_name']) ?>"></div>
         <div class="eyebrow-label"><?= e($opportunity['category_name']) ?></div>
         <h1 class="detail-title"><?= e($opportunity['title']) ?></h1>
         <div class="detail-meta">

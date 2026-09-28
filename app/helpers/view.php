@@ -61,6 +61,30 @@ function categoryColor(string $categoryName): string
 }
 
 /**
+ * Inline background for a category's cover (opportunity cards and detail):
+ * the category photo when its file exists, over the category's solid color,
+ * which is also what shows when the photo is missing.
+ */
+function categoryCoverStyle(string $categoryName): string
+{
+    $categoryPhotos = [
+        'Ambiental' => 'cat-ambiental.jpg',
+        'Educativo' => 'cat-educativo.jpg',
+        'Salud' => 'cat-salud.jpg',
+        'Comunitario' => 'cat-comunitario.jpg',
+        'Cultural' => 'cat-cultural.jpg',
+    ];
+    $style = 'background-color:' . categoryColor($categoryName) . ';';
+
+    $photo = $categoryPhotos[$categoryName] ?? null;
+    if ($photo !== null && is_file(dirname(__DIR__, 2) . '/public/assets/img/' . $photo)) {
+        $style .= "background-image:url('" . assetUrl('img/' . $photo) . "');";
+    }
+
+    return $style;
+}
+
+/**
  * Picks a readable text color (near-white or near-black) for a given
  * background hex color, based on relative luminance. Used to keep icon
  * glyphs legible over data-driven category colors.

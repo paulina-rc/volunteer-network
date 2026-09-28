@@ -14,12 +14,10 @@
 $cardCompact = $cardCompact ?? false;
 $cardIsOpen = acceptsEnrollments($cardOpportunity);
 $cardSlots = (int) ($cardOpportunity['available_slots'] ?? 0);
-$cardColor = categoryColor($cardOpportunity['category_name']);
 ?>
 <div class="opportunity-card<?= $cardCompact ? ' opportunity-card--compact' : '' ?>"
      data-opportunity-card data-category="<?= e($cardOpportunity['category_name']) ?>">
-    <div class="opportunity-card__photo category-cover" style="background:<?= $cardColor ?>;color:<?= contrastColor($cardColor) ?>">
-        <span class="category-cover__label"><?= e($cardOpportunity['category_name']) ?></span>
+    <div class="opportunity-card__photo category-cover" style="<?= categoryCoverStyle($cardOpportunity['category_name']) ?>">
         <?php if ($cardIsOpen): ?>
             <span class="opportunity-card__badge" style="background:#E9A227;color:#4a3106"><?= $cardSlots ?> cupos</span>
         <?php else: ?>
